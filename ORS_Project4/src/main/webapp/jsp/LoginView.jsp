@@ -24,7 +24,7 @@
 		<input type="hidden" name="URI" value="<%=URI%>">
 
 		<center>
-			<h1>Login</h1>
+			<h1>Login 1</h1>
 
 			<H2>
 				<font color="red"> <%=ServletUtility.getErrorMessage(request)%>
