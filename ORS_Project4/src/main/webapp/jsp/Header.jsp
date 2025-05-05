@@ -88,7 +88,7 @@
 					href="<%=ORSView.PRODUCT_CTL%>">Add Product</b></a> | <a
 					href="<%=ORSView.PRODUCT_LIST_CTL%>">Product List</b></a> | <a
 					href="<%=ORSView.SUPPLIER_CTL%>">Add Supplier</a> | <a
-					href="<%=ORSView.SUPPLIER_LIST_CTL%>">Supplier List</a> | |<a
+					href="<%=ORSView.SUPPLIER_LIST_CTL%>">Supplier List</a> |<a
 					
 					
 					target="blank" href="<%=ORSView.JAVA_DOC_VIEW%>">Java Doc</b></a> <%
