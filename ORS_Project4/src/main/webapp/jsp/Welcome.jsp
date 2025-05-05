@@ -14,7 +14,7 @@
 		<%@ include file="Header.jsp"%>
 		<br>
 		<h1 align="Center">
-			<font size="10px" color="red">Welcome to ORS </font>
+			<font size="10px" color="red">Welcome to ORS</font>
 		</h1>
 
 		<%
