@@ -67,7 +67,7 @@ public abstract class BaseCtl extends HttpServlet {
 
 	/**
 	 * Populates bean object from request parameters
-	 *
+	 * 
 	 * @param request
 	 * @return
 	 */

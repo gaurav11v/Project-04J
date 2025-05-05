@@ -1,4 +1,4 @@
-<%@page import="java.util.HashMap"%>
+ <%@page import="java.util.HashMap"%>
 <%@page import="java.util.List"%>
 <%@page import="com.rays.pro4.Util.HTMLUtility"%>
 <%@page import="com.rays.pro4.Util.DataUtility"%>
@@ -172,7 +172,10 @@
 							map.put("Female", "Female");
 
 							String hlist = HTMLUtility.getList("gender", String.valueOf(bean.getGender()), map);
-						%> <%=hlist%>
+						%>
+						
+						 <%=hlist%>
+						 
 					</td>
 					<td style="position: fixed"><font color="red"> <%=ServletUtility.getErrorMessage("gender", request)%></font></td>
 				</tr>

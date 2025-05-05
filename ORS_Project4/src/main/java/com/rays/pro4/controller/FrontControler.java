@@ -36,7 +36,7 @@ public class FrontControler implements Filter {
 	public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain)
 			throws IOException, ServletException {
 		System.out.println("Fctl Do filter");
-
+  
 		HttpServletRequest request = (HttpServletRequest) req;
 		HttpServletResponse response = (HttpServletResponse) resp;
 		
@@ -59,6 +59,7 @@ public class FrontControler implements Filter {
 	}
 
 	/*
+	 * 
 	 * (non-Javadoc)
 	 * 
 	 * @see javax.servlet.Filter#init(javax.servlet.FilterConfig)

@@ -1,0 +1,86 @@
+pipeline {
+    agent any
+
+    environment {
+        TOMCAT_HOME = 'D:\\Server\\apache-tomcat-9.0.96'
+        TOMCAT_WEBAPPS_PATH = "${TOMCAT_HOME}\\webapps"
+        TOMCAT_SERVICE_NAME = 'Tomcat9'  // Change this if your service name is different
+        MAVEN_HOME = "C:\\ProgramData\\Jenkins\\.jenkins\\tools\\hudson.tasks.Maven_MavenInstallation\\maven"
+    }
+
+    stages {
+        stage('Cleanup Workspace') {
+            steps {
+                deleteDir()
+            }
+        }
+
+        stage('Clone Repository') {
+            steps {
+                git credentialsId: 'github-credentials', url: 'https://github.com/gaurav11v/Project-04J.git', branch: 'main'
+            }
+        }
+
+        stage('Build WAR File') {
+            steps {
+                bat "\"%MAVEN_HOME%\\bin\\mvn\" clean package -DskipTests -Dmaven.repo.local=.m2/repository -f ORS_Project4/pom.xml"
+            }
+        }
+
+        stage('Copy WAR to Tomcat') {
+            steps {
+                script {
+                    def warFile = "ORS_Project4\\target\\ORS_Project4.war"
+                    def destination = "${TOMCAT_WEBAPPS_PATH}\\ORS_Project4.war"
+                    bat "xcopy /Y /F \"${warFile}\" \"${destination}\""
+                }
+            }
+        }
+
+        stage('Ensure Tomcat Service Exists') {
+            steps {
+                script {
+                    def serviceExists = bat(script: "sc query ${TOMCAT_SERVICE_NAME}", returnStatus: true) == 0
+                    if (!serviceExists) {
+                        echo "Tomcat service not found. Installing..."
+                        bat "cd /d ${TOMCAT_HOME}\\bin && service.bat install"
+                    } else {
+                        echo "Tomcat service already installed."
+                    }
+                }
+            }
+        }
+
+        stage('Restart Tomcat') {
+            steps {
+                script {
+                    def tomcatRunning = bat(script: "sc query ${TOMCAT_SERVICE_NAME} | findstr RUNNING", returnStatus: true) == 0
+                    if (tomcatRunning) {
+                        echo "Stopping Tomcat..."
+                        bat "sc stop ${TOMCAT_SERVICE_NAME}"
+                        sleep time: 10, unit: 'SECONDS'
+                    } else {
+                        echo "Tomcat is not running. Starting..."
+                    }
+                    echo "Starting Tomcat Service..."
+                    bat "sc start ${TOMCAT_SERVICE_NAME}"
+                }
+            }
+        }
+
+        stage('Verify Deployment') {
+            steps {
+                script {
+                    bat "powershell -Command \"try {Invoke-WebRequest -Uri 'http://localhost:8080/ORS_Project4' -UseBasicParsing} catch {Write-Host 'Tomcat is not reachable'}\""
+                }
+            }
+        }
+    }
+
+    post {
+        always {
+            echo 'Cleaning workspace...'
+            deleteDir()
+        }
+    }
+}

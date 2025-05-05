@@ -1,193 +1,1207 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Spring]]></title><description><![CDATA[Level up your Java code and explore what Spring can do for you.]]></description><link>https://spring.io</link><generator>GatsbyJS</generator><lastBuildDate>Wed, 15 Jan 2025 00:32:46 GMT</lastBuildDate><item><title><![CDATA[This Week in Spring - January 14th, 2025]]></title><link>https://spring.io/blog/2025/01/14/this-week-in-spring-january-14th-2025</link><guid isPermaLink="true">https://spring.io/blog/2025/01/14/this-week-in-spring-january-14th-2025</guid><dc:creator><![CDATA[joshlong]]></dc:creator><pubDate>Tue, 14 Jan 2025 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;Hi, Spring fans, and greetings from the island of St. Barths! &lt;em&gt;Salut depuis l&apos;île de Saint-Barthélemy!&lt;/em&gt;&lt;/p&gt;
-&lt;p&gt;I&apos;m on a bit of PTO and have been bouncing around from one beach to another with my family. I just landed on a winning combination for a beach: warm water, a restaurant/bar, and some for-pay seats with shade. There are precisely three things to do in such a cherished spot: use it as a launchpad for occasional dips in the sea, read, and sleep—usually in that order!&lt;/p&gt;
-&lt;p&gt;And you know what I&apos;ve been reading? The wild and wacky antics of the Spring community, of course!&lt;/p&gt;
-&lt;p&gt;There&apos;s a ton of exciting news to dive into, so let&apos;s dive really deep into this week&apos;s roundup—and then I&apos;ll dive really deep into that beautiful blue ocean!&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;https://spring.io/blog/2025/01/13/spring-ai-mcp-0&quot;&gt;Spring AI MCP 0.5.0 is now available&lt;/a&gt;: Spring AI makes it trivial to build MCP clients and services. MCP, of course, is a protocol that allows you to integrate arbitrary external data sources into your LLMs, like Claude.&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://spring.io/blog/2025/01/10/spring-cloud-2023-0-5-aka-leyton-has-been-released&quot;&gt;Spring Cloud 2023.0.5 (aka Leyton) is now available&lt;/a&gt;: This release includes several updates and fixes—definitely worth checking out!&lt;/li&gt;
-&lt;li&gt;In last week&apos;s installment of &lt;em&gt;A Bootiful Podcast&lt;/em&gt;, I talked to the good, the great, the legendary  Dr. Dave Syer. We explored the awesome (and experimental!) &lt;a href=&quot;https://spring.io/blog/2025/01/10/spring-cloud-2023-0-5-aka-leyton-has-been-released&quot;&gt;new Spring gRPC project&lt;/a&gt;.&lt;/li&gt;
-&lt;li&gt;Finally, a solution to my often-lamented build time problems with GraalVM: &lt;a href=&quot;https://github.com/xdev-software/music-maven-plugin&quot;&gt;a Maven plugin that plays music while the build is running&lt;/a&gt;! Thanks, Richard Fichtner!&lt;/li&gt;
-&lt;li&gt;A very practical guide  on how to integrate Google Analytics &lt;a href=&quot;https://foojay.io/today/integrating-google-analytics-with-vaadin-flow-a-step-by-step-guide/&quot;&gt;into your Vaadin Flow application&lt;/a&gt;.&lt;/li&gt;
-&lt;li&gt;Wow! This post on using Spring AI and Vaadin to build an application that accepts images as inputs and then converts them into editable grids &lt;a href=&quot;https://vaadin.com/blog/extracting-structured-data-from-images-using-ai-in-java&quot;&gt;of data in a Vaadin UI&lt;/a&gt; is something to behold!&lt;/li&gt;
-&lt;li&gt;I love SivaLabs&apos; amazing post looking at the &lt;code&gt;JdbcClient&lt;/code&gt;, which has been in Spring Framework for more than a year. I have replaced all my JDBC &lt;a href=&quot;https://www.sivalabs.in/spring-boot-jdbcclient-tutorial/&quot;&gt;work with the &lt;code&gt;JdbcClient&lt;/code&gt;&lt;/a&gt;, vastly preferring it to the &lt;code&gt;JdbcTemplate&lt;/code&gt; for my work.&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://www.dhaval-shah.com/parallel-processing-virtual-threads-reactor-vs-jdk/&quot;&gt;Dhaval Shah&lt;/a&gt; has a great post on diving into virtual threads. It’s an insightful read comparing parallel processing with virtual threads, Project Reactor, and the JDK!&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;Enjoy the updates, and I’ll catch you next week—probably still sandy, sunburned, and thinking about Spring!&lt;/p&gt;</content:encoded></item><item><title><![CDATA[Spring AI MCP 0.5.0 (Milestone) Released]]></title><link>https://spring.io/blog/2025/01/13/spring-ai-mcp-0</link><guid isPermaLink="true">https://spring.io/blog/2025/01/13/spring-ai-mcp-0</guid><dc:creator><![CDATA[tzolov]]></dc:creator><pubDate>Mon, 13 Jan 2025 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;We&apos;re pleased to announce Spring AI MCP &lt;code&gt;0.5.0&lt;/code&gt; milestone release.&lt;/p&gt;
-&lt;h2 id=&quot;major-features--improvements&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#major-features--improvements&quot; aria-label=&quot;major features  improvements permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Major Features &amp;#x26; Improvements&lt;/h2&gt;
-&lt;h3 id=&quot;transport-layer-enhancements&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#transport-layer-enhancements&quot; aria-label=&quot;transport layer enhancements permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Transport Layer Enhancements&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;strong&gt;New Servlet-based SSE Transport&lt;/strong&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Added HttpServletSseServerTransport with Servlet 6.0 support&lt;/li&gt;
-&lt;li&gt;Enables integration with any Java HTTP server supporting Servlets&lt;/li&gt;
-&lt;li&gt;Compatible with Jakarta Servlet API 6.1.0&lt;/li&gt;
-&lt;li&gt;Includes comprehensive integration tests with Tomcat&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;strong&gt;Enhanced WebMVC Transport&lt;/strong&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Replaced Spring&apos;s SseEmitter with custom BlockingQueue-based implementation&lt;/li&gt;
-&lt;li&gt;Improved event delivery control and connection management&lt;/li&gt;
-&lt;li&gt;Added dedicated session management with SSEEvent record&lt;/li&gt;
-&lt;li&gt;Enhanced error handling and timeout management&lt;/li&gt;
-&lt;li&gt;Includes comprehensive integration tests&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&quot;architecture--modularity&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#architecture--modularity&quot; aria-label=&quot;architecture  modularity permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Architecture &amp;#x26; Modularity&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;Transport Implementation Modularization&lt;/strong&gt;
-&lt;ul&gt;
-&lt;li&gt;Split transport implementations into dedicated modules&lt;/li&gt;
-&lt;li&gt;Created separate modules for WebFlux and WebMVC SSE transports&lt;/li&gt;
-&lt;li&gt;Added framework-independent SSE client implementations using java.net.http&lt;/li&gt;
-&lt;li&gt;Introduced shared test module for common test utilities&lt;/li&gt;
-&lt;li&gt;Maintained STDIO transport in core for basic functionality&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&quot;build--dependency-management&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#build--dependency-management&quot; aria-label=&quot;build  dependency management permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Build &amp;#x26; Dependency Management&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;New Bill of Materials (BOM)&lt;/strong&gt;
-&lt;ul&gt;
-&lt;li&gt;Introduced mcp-bom module for centralized version management&lt;/li&gt;
-&lt;li&gt;Simplified dependency version management across Spring AI MCP projects&lt;/li&gt;
-&lt;li&gt;Streamlined version compatibility across components&lt;/li&gt;
-&lt;li&gt;Updated documentation to reference the new BOM&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&quot;security-updates&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#security-updates&quot; aria-label=&quot;security updates permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Security Updates&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;Updated Tomcat dependencies to address security vulnerabilities:
-&lt;ul&gt;
-&lt;li&gt;tomcat-embed-core upgraded from 10.1.18 to 10.1.34&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&quot;compatibility-notes&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#compatibility-notes&quot; aria-label=&quot;compatibility notes permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Compatibility Notes&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;Requires Jakarta Servlet API 6.1.0 for Servlet-based transport&lt;/li&gt;
-&lt;li&gt;Compatible with Tomcat 11.0.2 and newer&lt;/li&gt;
-&lt;li&gt;Users should migrate to the new BOM for dependency management&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&quot;documentation-updates&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#documentation-updates&quot; aria-label=&quot;documentation updates permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Documentation Updates&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;Added dependency management documentation&lt;/li&gt;
-&lt;li&gt;Updated existing documentation to use BOM references&lt;/li&gt;
-&lt;li&gt;Added integration examples for new transport implementations&lt;/li&gt;
-&lt;/ul&gt;</content:encoded></item><item><title><![CDATA[Spring Cloud 2023.0.5 (aka Leyton) Is Now Available]]></title><link>https://spring.io/blog/2025/01/10/spring-cloud-2023-0-5-aka-leyton-has-been-released</link><guid isPermaLink="true">https://spring.io/blog/2025/01/10/spring-cloud-2023-0-5-aka-leyton-has-been-released</guid><dc:creator><![CDATA[spencergibb]]></dc:creator><pubDate>Fri, 10 Jan 2025 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;On behalf of the community, I am pleased to announce that the General Availability (RELEASE) of the &lt;a href=&quot;https://cloud.spring.io&quot;&gt;Spring Cloud 2023.0.5&lt;/a&gt;
-(aka Leyton) Release Train is available today. The release can be found in &lt;a href=&quot;https://repo1.maven.org/maven2/org/springframework/cloud/spring-cloud-dependencies/2023.0.5/&quot;&gt;Maven Central&lt;/a&gt;. You can check out the 2023.0 &lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-release/wiki/Spring-Cloud-2023.0-Release-Notes&quot;&gt;release notes for more information&lt;/a&gt;.&lt;/p&gt;
-&lt;h2 id=&quot;notable-changes-in-the-202305-release-train&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#notable-changes-in-the-202305-release-train&quot; aria-label=&quot;notable changes in the 202305 release train permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Notable Changes in the 2023.0.5 Release Train&lt;/h2&gt;
-&lt;p&gt;This is mostly a bugfix and dependency upgrade release. Please find the issues and pull requests &lt;a href=&quot;https://github.com/orgs/spring-cloud/projects/161&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
-&lt;hr&gt;
-&lt;p&gt;The following modules were updated as part of 2023.0.5:&lt;/p&gt;
-&lt;table&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th&gt;Module&lt;/th&gt;
-&lt;th&gt;Version&lt;/th&gt;
-&lt;th&gt;Issues&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td&gt;Spring Cloud Starter Build&lt;/td&gt;
-&lt;td&gt;2023.0.5&lt;/td&gt;
-&lt;td&gt;(&lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-starter-build/releases/tag/v2023.0.5&quot;&gt;issues&lt;/a&gt;)&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;Spring Cloud Netflix&lt;/td&gt;
-&lt;td&gt;4.1.5&lt;/td&gt;
-&lt;td&gt;(&lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-netflix/releases/tag/v4.1.5&quot;&gt;issues&lt;/a&gt;)&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;Spring Cloud Config&lt;/td&gt;
-&lt;td&gt;4.1.5&lt;/td&gt;
-&lt;td&gt;(&lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-config/releases/tag/v4.1.5&quot;&gt;issues&lt;/a&gt;)&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;Spring Cloud Build&lt;/td&gt;
-&lt;td&gt;4.1.5&lt;/td&gt;
-&lt;td&gt;(&lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-build/releases/tag/v4.1.5&quot;&gt;issues&lt;/a&gt;)&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;Spring Cloud Kubernetes&lt;/td&gt;
-&lt;td&gt;3.1.5&lt;/td&gt;
-&lt;td&gt;(&lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-kubernetes/releases/tag/v3.1.5&quot;&gt;issues&lt;/a&gt;)&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;Spring Cloud Stream&lt;/td&gt;
-&lt;td&gt;4.1.5&lt;/td&gt;
-&lt;td&gt;(&lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-stream/releases/tag/v4.1.5&quot;&gt;issues&lt;/a&gt;)&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;Spring Cloud Function&lt;/td&gt;
-&lt;td&gt;4.1.5&lt;/td&gt;
-&lt;td&gt;(&lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-function/releases/tag/v4.1.5&quot;&gt;issues&lt;/a&gt;)&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;Spring Cloud Circuitbreaker&lt;/td&gt;
-&lt;td&gt;3.1.4&lt;/td&gt;
-&lt;td&gt;(&lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-circuitbreaker/releases/tag/v3.1.4&quot;&gt;issues&lt;/a&gt;)&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;hr&gt;
-&lt;p&gt;As always, we welcome feedback on &lt;a href=&quot;https://github.com/spring-cloud/&quot;&gt;GitHub&lt;/a&gt;, on &lt;a href=&quot;https://gitter.im/spring-cloud/spring-cloud&quot;&gt;Gitter&lt;/a&gt;, on &lt;a href=&quot;https://stackoverflow.com/questions/tagged/spring-cloud&quot;&gt;Stack Overflow&lt;/a&gt;, or on &lt;a href=&quot;https://twitter.com/SpringCloud&quot;&gt;Twitter&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;To get started with Maven with a BOM (dependency management only):&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-xml&quot;&gt;
-&amp;#x3C;dependencyManagement&gt;
-    &amp;#x3C;dependencies&gt;
-        &amp;#x3C;dependency&gt;
-            &amp;#x3C;groupId&gt;org.springframework.cloud&amp;#x3C;/groupId&gt;
-            &amp;#x3C;artifactId&gt;spring-cloud-dependencies&amp;#x3C;/artifactId&gt;
-            &amp;#x3C;version&gt;2023.0.5&amp;#x3C;/version&gt;
-            &amp;#x3C;type&gt;pom&amp;#x3C;/type&gt;
-            &amp;#x3C;scope&gt;import&amp;#x3C;/scope&gt;
-        &amp;#x3C;/dependency&gt;
-    &amp;#x3C;/dependencies&gt;
-&amp;#x3C;/dependencyManagement&gt;
-&amp;#x3C;dependencies&gt;
-    &amp;#x3C;dependency&gt;
-        &amp;#x3C;groupId&gt;org.springframework.cloud&amp;#x3C;/groupId&gt;
-        &amp;#x3C;artifactId&gt;spring-cloud-starter-config&amp;#x3C;/artifactId&gt;
-    &amp;#x3C;/dependency&gt;
-    &amp;#x3C;dependency&gt;
-        &amp;#x3C;groupId&gt;org.springframework.cloud&amp;#x3C;/groupId&gt;
-        &amp;#x3C;artifactId&gt;spring-cloud-starter-netflix-eureka-client&amp;#x3C;/artifactId&gt;
-    &amp;#x3C;/dependency&gt;
-    ...
-&amp;#x3C;/dependencies&gt;
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Spring]]></title><description><![CDATA[Level up your Java code and explore what Spring can do for you.]]></description><link>https://spring.io</link><generator>GatsbyJS</generator><lastBuildDate>Mon, 14 Apr 2025 09:45:35 GMT</lastBuildDate><item><title><![CDATA[Prompt Engineering Techniques with Spring AI]]></title><link>https://spring.io/blog/2025/04/14/spring-ai-prompt-engineering-patterns</link><guid isPermaLink="true">https://spring.io/blog/2025/04/14/spring-ai-prompt-engineering-patterns</guid><dc:creator><![CDATA[tzolov]]></dc:creator><pubDate>Mon, 14 Apr 2025 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;This blog post demonstrates practical implementations of Prompt Engineering techniques using &lt;a href=&quot;https://docs.spring.io/spring-ai/reference/index.html&quot;&gt;Spring AI&lt;/a&gt;.&lt;/p&gt;
+&lt;img style=&quot;float: right; display: block; margin: auto;&quot; src=&quot;https://raw.githubusercontent.com/spring-projects/spring-ai-examples/refs/heads/main/prompt-engineering/prompt-engineering-patterns/prompt-engineering-spring-ai.png&quot; width=&quot;300&quot;&gt;
+&lt;p&gt;The examples and patterns in this article are based on the comprehensive &lt;a href=&quot;https://www.kaggle.com/whitepaper-prompt-engineering&quot;&gt;Prompt Engineering Guide&lt;/a&gt; that covers the theory, principles, and patterns of effective prompt engineering.&lt;/p&gt;
+&lt;p&gt;The blog shows how to translate those concepts into working Java code using Spring AI&apos;s fluent &lt;a href=&quot;https://docs.spring.io/spring-ai/reference/api/chatclient.html&quot;&gt;ChatClient API&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;For convenience, the examples are structured to follow the same patterns and techniques outlined in the original guide.&lt;/p&gt;
+&lt;p&gt;The demo source code used in this article is available at: &lt;a href=&quot;https://github.com/spring-projects/spring-ai-examples/tree/main/prompt-engineering/prompt-engineering-patterns&quot;&gt;https://github.com/spring-projects/spring-ai-examples/tree/main/prompt-engineering/prompt-engineering-patterns&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&quot;1-configuration&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#1-configuration&quot; aria-label=&quot;1 configuration permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;1. Configuration&lt;/h2&gt;
+&lt;p&gt;The configuration section outlines how to set up and tune your Large Language Model (LLM) with Spring AI.
+It covers selecting the right LLM provider for your use case and configuring important generation parameters that control the quality, style, and format of model outputs.&lt;/p&gt;
+&lt;h3 id=&quot;llm-provider-selection&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#llm-provider-selection&quot; aria-label=&quot;llm provider selection permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;LLM Provider Selection&lt;/h3&gt;
+&lt;p&gt;For prompt engineering, you will start by choosing a model.
+Spring AI supports &lt;a href=&quot;https://docs.spring.io/spring-ai/reference/api/chat/comparison.html&quot;&gt;multiple LLM providers&lt;/a&gt; (such as OpenAI, Anthropic, Google Vertex AI, AWS Bedrock, Ollama, and more), letting you switch providers without changing application code—just update your configuration.
+Just add the selected starter dependency &lt;code&gt;spring-ai-starter-model-&amp;#x3C;MODEL-PROVIDER-NAME&gt;&lt;/code&gt;.
+For example, here is how to enable Anthropic Claude API:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-xml&quot;&gt;&amp;#x3C;dependency&gt;
+    &amp;#x3C;groupId&gt;org.springframework.ai&amp;#x3C;/groupId&gt;
+    &amp;#x3C;artifactId&gt;spring-ai-starter-model-anthropic&amp;#x3C;/artifactId&gt;
+&amp;#x3C;/dependency&gt;
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;or with Gradle:&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-groovy&quot;&gt;plugins {
-  id &apos;java&apos;
-  id &apos;org.springframework.boot&apos; version &apos;3.3.7&apos;
-  id &apos;io.spring.dependency-management&apos; version &apos;1.1.7&apos;
+&lt;p&gt;along with some connection properties:
+&lt;code&gt;spring.ai.anthropic.api-key=${ANTHROPIC_API_KEY}&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;You can specify a particular LLM model name like this:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-java&quot;&gt;.options(ChatOptions.builder()
+        .model(&quot;claude-3-7-sonnet-latest&quot;)  // Use Anthropic&apos;s Claude model
+        .build())
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Find detailed information for enabling and configuring the preferred AI model in the &lt;a href=&quot;https://docs.spring.io/spring-ai/reference/api/chatmodel.html&quot;&gt;reference docs&lt;/a&gt;.&lt;/p&gt;
+&lt;h3 id=&quot;llm-output-configuration&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#llm-output-configuration&quot; aria-label=&quot;llm output configuration permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;LLM Output Configuration&lt;/h3&gt;
+&lt;img style=&quot;float: right;&quot; src=&quot;https://docs.spring.io/spring-ai/reference/_images/chat-options-flow.jpg&quot; width=&quot;400&quot;&gt;
+&lt;p&gt;Before we dive into prompt engineering techniques, it&apos;s essential to understand how to configure the LLM&apos;s output behavior. Spring AI provides several configuration options that let you control various aspects of generation through the &lt;a href=&quot;https://docs.spring.io/spring-ai/reference/api/chatmodel.html#_chat_options&quot;&gt;ChatOptions&lt;/a&gt; builder.&lt;/p&gt;
+&lt;p&gt;All configurations can be applied programmatically as demonstrated in the examples below or through Spring application properties at start time.&lt;/p&gt;
+&lt;h4 id=&quot;temperature&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#temperature&quot; aria-label=&quot;temperature permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Temperature&lt;/h4&gt;
+&lt;p&gt;Temperature controls the randomness or &quot;creativity&quot; of the model&apos;s response.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Lower values (0.0-0.3)&lt;/strong&gt;: More deterministic, focused responses. Better for factual questions, classification, or tasks where consistency is critical.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Medium values (0.4-0.7)&lt;/strong&gt;: Balanced between determinism and creativity. Good for general use cases.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Higher values (0.8-1.0)&lt;/strong&gt;: More creative, varied, and potentially surprising responses. Better for creative writing, brainstorming, or generating diverse options.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;&lt;code class=&quot;language-java&quot;&gt;.options(ChatOptions.builder()
+        .temperature(0.1)  // Very deterministic output
+        .build())
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Understanding temperature is crucial for prompt engineering as different techniques benefit from different temperature settings.&lt;/p&gt;
+&lt;h4 id=&quot;output-length-maxtokens&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#output-length-maxtokens&quot; aria-label=&quot;output length maxtokens permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Output Length (MaxTokens)&lt;/h4&gt;
+&lt;p&gt;The &lt;code&gt;maxTokens&lt;/code&gt; parameter limits how many tokens (word pieces) the model can generate in its response.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Low values (5-25)&lt;/strong&gt;: For single words, short phrases, or classification labels.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Medium values (50-500)&lt;/strong&gt;: For paragraphs or short explanations.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;High values (1000+)&lt;/strong&gt;: For long-form content, stories, or complex explanations.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;&lt;code class=&quot;language-java&quot;&gt;.options(ChatOptions.builder()
+        .maxTokens(250)  // Medium-length response
+        .build())
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Setting appropriate output length is important to ensure you get complete responses without unnecessary verbosity.&lt;/p&gt;
+&lt;h4 id=&quot;sampling-controls-top-k-and-top-p&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#sampling-controls-top-k-and-top-p&quot; aria-label=&quot;sampling controls top k and top p permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Sampling Controls (Top-K and Top-P)&lt;/h4&gt;
+&lt;p&gt;These parameters give you fine-grained control over the token selection process during generation.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Top-K&lt;/strong&gt;: Limits token selection to the K most likely next tokens. Higher values (e.g., 40-50) introduce more diversity.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Top-P (nucleus sampling)&lt;/strong&gt;: Dynamically selects from the smallest set of tokens whose cumulative probability exceeds P. Values like 0.8-0.95 are common.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;&lt;code class=&quot;language-java&quot;&gt;.options(ChatOptions.builder()
+        .topK(40)      // Consider only the top 40 tokens
+        .topP(0.8)     // Sample from tokens that cover 80% of probability mass
+        .build())
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;These sampling controls work in conjunction with temperature to shape response characteristics.&lt;/p&gt;
+&lt;h4 id=&quot;structured-response-format&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#structured-response-format&quot; aria-label=&quot;structured response format permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Structured Response Format&lt;/h4&gt;
+&lt;p&gt;Along with the plain text response (using &lt;code&gt;.content()&lt;/code&gt;), Spring AI makes it easy to directly map LLM responses to Java objects using the &lt;code&gt;.entity()&lt;/code&gt; method.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-java&quot;&gt;enum Sentiment {
+    POSITIVE, NEUTRAL, NEGATIVE
 }
 
-//...
+Sentiment result = chatClient.prompt(&quot;...&quot;)
+        .call()
+        .entity(Sentiment.class);
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;This feature is particularly powerful when combined with system prompts that instruct the model to return structured data.&lt;/p&gt;
+&lt;h4 id=&quot;model-specific-options&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#model-specific-options&quot; aria-label=&quot;model specific options permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Model-Specific Options&lt;/h4&gt;
+&lt;p&gt;While the portable &lt;code&gt;ChatOptions&lt;/code&gt; provides a consistent interface across different LLM providers, Spring AI also offers model-specific options classes that expose provider-specific features and configurations. These model-specific options allow you to leverage the unique capabilities of each LLM provider.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-java&quot;&gt;// Using OpenAI-specific options
+OpenAiChatOptions openAiOptions = OpenAiChatOptions.builder()
+        .model(&quot;gpt-4o&quot;)
+        .temperature(0.2)
+        .frequencyPenalty(0.5)      // OpenAI-specific parameter
+        .presencePenalty(0.3)       // OpenAI-specific parameter
+        .responseFormat(new ResponseFormat(&quot;json_object&quot;))  // OpenAI-specific JSON mode
+        .seed(42)                   // OpenAI-specific deterministic generation
+        .build();
 
-ext {
-  set(&apos;springCloudVersion&apos;, &quot;2023.0.4&quot;)
+String result = chatClient.prompt(&quot;...&quot;)
+        .options(openAiOptions)
+        .call()
+        .content();
+
+// Using Anthropic-specific options
+AnthropicChatOptions anthropicOptions = AnthropicChatOptions.builder()
+        .model(&quot;claude-3-7-sonnet-latest&quot;)
+        .temperature(0.2)
+        .topK(40)                   // Anthropic-specific parameter
+        .thinking(AnthropicApi.ThinkingType.ENABLED, 1000)  // Anthropic-specific thinking configuration
+        .build();
+
+String result = chatClient.prompt(&quot;...&quot;)
+        .options(anthropicOptions)
+        .call()
+        .content();
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Each model provider has its own implementation of chat options (e.g., &lt;code&gt;OpenAiChatOptions&lt;/code&gt;, &lt;code&gt;AnthropicChatOptions&lt;/code&gt;, &lt;code&gt;MistralAiChatOptions&lt;/code&gt;) that exposes provider-specific parameters while still implementing the common interface. This approach gives you the flexibility to use portable options for cross-provider compatibility or model-specific options when you need access to unique features of a particular provider.&lt;/p&gt;
+&lt;p&gt;Note that when using model-specific options, your code becomes tied to that specific provider, reducing portability. It&apos;s a trade-off between accessing advanced provider-specific features versus maintaining provider independence in your application.&lt;/p&gt;
+&lt;h2 id=&quot;2-prompt-engineering-techniques&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#2-prompt-engineering-techniques&quot; aria-label=&quot;2 prompt engineering techniques permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;2. Prompt Engineering Techniques&lt;/h2&gt;
+&lt;p&gt;Each section below implements a specific prompt engineering technique from the guide.
+By following both the &quot;Prompt Engineering&quot; guide and these implementations, you&apos;ll develop a thorough understanding of not just what prompt engineering techniques are available, but how to effectively implement them in production Java applications.&lt;/p&gt;
+&lt;h3 id=&quot;21-zero-shot-prompting&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#21-zero-shot-prompting&quot; aria-label=&quot;21 zero shot prompting permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;2.1 Zero-Shot Prompting&lt;/h3&gt;
+&lt;p&gt;Zero-shot prompting involves asking an AI to perform a task without providing any examples. This approach tests the model&apos;s ability to understand and execute instructions from scratch. Large language models are trained on vast corpora of text, allowing them to understand what tasks like &quot;translation,&quot; &quot;summarization,&quot; or &quot;classification&quot; entail without explicit demonstrations.&lt;/p&gt;
+&lt;p&gt;Zero-shot is ideal for straightforward tasks where the model likely has seen similar examples during training, and when you want to minimize prompt length. However, performance may vary depending on task complexity and how well the instructions are formulated.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-java&quot;&gt;// Implementation of Section 2.1: General prompting / zero shot (page 15)
+public void pt_zero_shot(ChatClient chatClient) {
+    enum Sentiment {
+        POSITIVE, NEUTRAL, NEGATIVE
+    }
+
+    Sentiment reviewSentiment = chatClient.prompt(&quot;&quot;&quot;
+            Classify movie reviews as POSITIVE, NEUTRAL or NEGATIVE.
+            Review: &quot;Her&quot; is a disturbing study revealing the direction
+            humanity is headed if AI is allowed to keep evolving,
+            unchecked. I wish there were more movies like this masterpiece.
+            Sentiment:
+            &quot;&quot;&quot;)
+            .options(ChatOptions.builder()
+                    .model(&quot;claude-3-7-sonnet-latest&quot;)
+                    .temperature(0.1)
+                    .maxTokens(5)
+                    .build())
+            .call()
+            .entity(Sentiment.class);
+
+    System.out.println(&quot;Output: &quot; + reviewSentiment);
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;This example shows how to classify a movie review sentiment without providing examples. Note the low temperature (0.1) for more deterministic results and the direct &lt;code&gt;.entity(Sentiment.class)&lt;/code&gt; mapping to a Java enum.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Reference:&lt;/strong&gt; Brown, T. B., et al. (2020). &quot;Language Models are Few-Shot Learners.&quot; arXiv:2005.14165. &lt;a href=&quot;https://arxiv.org/abs/2005.14165&quot;&gt;https://arxiv.org/abs/2005.14165&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&quot;22-one-shot--few-shot-prompting&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#22-one-shot--few-shot-prompting&quot; aria-label=&quot;22 one shot  few shot prompting permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;2.2 One-Shot &amp;#x26; Few-Shot Prompting&lt;/h3&gt;
+&lt;p&gt;Few-shot prompting provides the model with one or more examples to help guide its responses, particularly useful for tasks requiring specific output formats. By showing the model examples of desired input-output pairs, it can learn the pattern and apply it to new inputs without explicit parameter updates.&lt;/p&gt;
+&lt;p&gt;One-shot provides a single example, which is useful when examples are costly or when the pattern is relatively simple. Few-shot uses multiple examples (typically 3-5) to help the model better understand patterns in more complex tasks or to illustrate different variations of correct outputs.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-java&quot;&gt;// Implementation of Section 2.2: One-shot &amp;#x26; few-shot (page 16)
+public void pt_ones_shot_few_shots(ChatClient chatClient) {
+    String pizzaOrder = chatClient.prompt(&quot;&quot;&quot;
+            Parse a customer&apos;s pizza order into valid JSON
+
+            EXAMPLE 1:
+            I want a small pizza with cheese, tomato sauce, and pepperoni.
+            JSON Response:
+            ```
+            {
+                &quot;size&quot;: &quot;small&quot;,
+                &quot;type&quot;: &quot;normal&quot;,
+                &quot;ingredients&quot;: [&quot;cheese&quot;, &quot;tomato sauce&quot;, &quot;pepperoni&quot;]
+            }
+            ```
+
+            EXAMPLE 2:
+            Can I get a large pizza with tomato sauce, basil and mozzarella.
+            JSON Response:
+            ```
+            {
+                &quot;size&quot;: &quot;large&quot;,
+                &quot;type&quot;: &quot;normal&quot;,
+                &quot;ingredients&quot;: [&quot;tomato sauce&quot;, &quot;basil&quot;, &quot;mozzarella&quot;]
+            }
+            ```
+
+            Now, I would like a large pizza, with the first half cheese and mozzarella.
+            And the other tomato sauce, ham and pineapple.
+            &quot;&quot;&quot;)
+            .options(ChatOptions.builder()
+                    .model(&quot;claude-3-7-sonnet-latest&quot;)
+                    .temperature(0.1)
+                    .maxTokens(250)
+                    .build())
+            .call()
+            .content();
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Few-shot prompting is especially effective for tasks requiring specific formatting, handling edge cases, or when the task definition might be ambiguous without examples. The quality and diversity of the examples significantly impact performance.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Reference:&lt;/strong&gt; Brown, T. B., et al. (2020). &quot;Language Models are Few-Shot Learners.&quot; arXiv:2005.14165. &lt;a href=&quot;https://arxiv.org/abs/2005.14165&quot;&gt;https://arxiv.org/abs/2005.14165&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&quot;23-system-contextual-and-role-prompting&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#23-system-contextual-and-role-prompting&quot; aria-label=&quot;23 system contextual and role prompting permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;2.3 System, contextual and role prompting&lt;/h3&gt;
+&lt;h4 id=&quot;system-prompting&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#system-prompting&quot; aria-label=&quot;system prompting permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;System Prompting&lt;/h4&gt;
+&lt;p&gt;System prompting sets the overall context and purpose for the language model, defining the &quot;big picture&quot; of what the model should be doing. It establishes the behavioral framework, constraints, and high-level objectives for the model&apos;s responses, separate from the specific user queries.&lt;/p&gt;
+&lt;p&gt;System prompts act as a persistent &quot;mission statement&quot; throughout the conversation, allowing you to set global parameters like output format, tone, ethical boundaries, or role definitions. Unlike user prompts which focus on specific tasks, system prompts frame how all user prompts should be interpreted.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-java&quot;&gt;// Implementation of Section 2.3.1: System prompting
+public void pt_system_prompting_1(ChatClient chatClient) {
+    String movieReview = chatClient
+            .prompt()
+            .system(&quot;Classify movie reviews as positive, neutral or negative. Only return the label in uppercase.&quot;)
+            .user(&quot;&quot;&quot;
+                    Review: &quot;Her&quot; is a disturbing study revealing the direction
+                    humanity is headed if AI is allowed to keep evolving,
+                    unchecked. It&apos;s so disturbing I couldn&apos;t watch it.
+
+                    Sentiment:
+                    &quot;&quot;&quot;)
+            .options(ChatOptions.builder()
+                    .model(&quot;claude-3-7-sonnet-latest&quot;)
+                    .temperature(1.0)
+                    .topK(40)
+                    .topP(0.8)
+                    .maxTokens(5)
+                    .build())
+            .call()
+            .content();
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;System prompting is particularly powerful when combined with Spring AI&apos;s entity mapping capabilities:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-java&quot;&gt;// Implementation of Section 2.3.1: System prompting with JSON output
+record MovieReviews(Movie[] movie_reviews) {
+    enum Sentiment {
+        POSITIVE, NEUTRAL, NEGATIVE
+    }
+
+    record Movie(Sentiment sentiment, String name) {
+    }
 }
 
-dependencies {
-  implementation &apos;org.springframework.cloud:spring-cloud-starter-config&apos;
-  implementation &apos;org.springframework.cloud:spring-cloud-starter-netflix-eureka-client&apos;
-  //...
+MovieReviews movieReviews = chatClient
+        .prompt()
+        .system(&quot;&quot;&quot;
+                Classify movie reviews as positive, neutral or negative. Return
+                valid JSON.
+                &quot;&quot;&quot;)
+        .user(&quot;&quot;&quot;
+                Review: &quot;Her&quot; is a disturbing study revealing the direction
+                humanity is headed if AI is allowed to keep evolving,
+                unchecked. It&apos;s so disturbing I couldn&apos;t watch it.
+
+                JSON Response:
+                &quot;&quot;&quot;)
+        .call()
+        .entity(MovieReviews.class);
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;System prompts are especially valuable for multi-turn conversations, ensuring consistent behavior across multiple queries, and for establishing format constraints like JSON output that should apply to all responses.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Reference:&lt;/strong&gt; OpenAI. (2022). &quot;System Message.&quot; &lt;a href=&quot;https://platform.openai.com/docs/guides/chat/introduction&quot;&gt;https://platform.openai.com/docs/guides/chat/introduction&lt;/a&gt;&lt;/p&gt;
+&lt;h4 id=&quot;role-prompting&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#role-prompting&quot; aria-label=&quot;role prompting permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Role Prompting&lt;/h4&gt;
+&lt;p&gt;Role prompting instructs the model to adopt a specific role or persona, which affects how it generates content. By assigning a particular identity, expertise, or perspective to the model, you can influence the style, tone, depth, and framing of its responses.&lt;/p&gt;
+&lt;p&gt;Role prompting leverages the model&apos;s ability to simulate different expertise domains and communication styles. Common roles include expert (e.g., &quot;You are an experienced data scientist&quot;), professional (e.g., &quot;Act as a travel guide&quot;), or stylistic character (e.g., &quot;Explain like you&apos;re Shakespeare&quot;).&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-java&quot;&gt;// Implementation of Section 2.3.2: Role prompting
+public void pt_role_prompting_1(ChatClient chatClient) {
+    String travelSuggestions = chatClient
+            .prompt()
+            .system(&quot;&quot;&quot;
+                    I want you to act as a travel guide. I will write to you
+                    about my location and you will suggest 3 places to visit near
+                    me. In some cases, I will also give you the type of places I
+                    will visit.
+                    &quot;&quot;&quot;)
+            .user(&quot;&quot;&quot;
+                    My suggestion: &quot;I am in Amsterdam and I want to visit only museums.&quot;
+                    Travel Suggestions:
+                    &quot;&quot;&quot;)
+            .call()
+            .content();
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Role prompting can be enhanced with style instructions:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-java&quot;&gt;// Implementation of Section 2.3.2: Role prompting with style instructions
+public void pt_role_prompting_2(ChatClient chatClient) {
+    String humorousTravelSuggestions = chatClient
+            .prompt()
+            .system(&quot;&quot;&quot;
+                    I want you to act as a travel guide. I will write to you about
+                    my location and you will suggest 3 places to visit near me in
+                    a humorous style.
+                    &quot;&quot;&quot;)
+            .user(&quot;&quot;&quot;
+                    My suggestion: &quot;I am in Amsterdam and I want to visit only museums.&quot;
+                    Travel Suggestions:
+                    &quot;&quot;&quot;)
+            .call()
+            .content();
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;This technique is particularly effective for specialized domain knowledge, achieving a consistent tone across responses, and creating more engaging, personalized interactions with users.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Reference:&lt;/strong&gt; Shanahan, M., et al. (2023). &quot;Role-Play with Large Language Models.&quot; arXiv:2305.16367. &lt;a href=&quot;https://arxiv.org/abs/2305.16367&quot;&gt;https://arxiv.org/abs/2305.16367&lt;/a&gt;&lt;/p&gt;
+&lt;h4 id=&quot;contextual-prompting&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#contextual-prompting&quot; aria-label=&quot;contextual prompting permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Contextual Prompting&lt;/h4&gt;
+&lt;p&gt;Contextual prompting provides additional background information to the model by passing context parameters. This technique enriches the model&apos;s understanding of the specific situation, enabling more relevant and tailored responses without cluttering the main instruction.&lt;/p&gt;
+&lt;p&gt;By supplying contextual information, you help the model understand the specific domain, audience, constraints, or background facts relevant to the current query. This leads to more accurate, relevant, and appropriately framed responses.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-java&quot;&gt;// Implementation of Section 2.3.3: Contextual prompting
+public void pt_contextual_prompting(ChatClient chatClient) {
+    String articleSuggestions = chatClient
+            .prompt()
+            .user(u -&gt; u.text(&quot;&quot;&quot;
+                    Suggest 3 topics to write an article about with a few lines of
+                    description of what this article should contain.
+
+                    Context: {context}
+                    &quot;&quot;&quot;)
+                    .param(&quot;context&quot;, &quot;You are writing for a blog about retro 80&apos;s arcade video games.&quot;))
+            .call()
+            .content();
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Spring AI makes contextual prompting clean with the param() method to inject context variables. This technique is particularly valuable when the model needs specific domain knowledge, when adapting responses to particular audiences or scenarios, and for ensuring responses are aligned with particular constraints or requirements.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Reference:&lt;/strong&gt; Liu, P., et al. (2021). &quot;What Makes Good In-Context Examples for GPT-3?&quot; arXiv:2101.06804. &lt;a href=&quot;https://arxiv.org/abs/2101.06804&quot;&gt;https://arxiv.org/abs/2101.06804&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&quot;24-step-back-prompting&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#24-step-back-prompting&quot; aria-label=&quot;24 step back prompting permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;2.4 Step-Back Prompting&lt;/h3&gt;
+&lt;p&gt;Step-back prompting breaks complex requests into simpler steps by first acquiring background knowledge. This technique encourages the model to first &quot;step back&quot; from the immediate question to consider the broader context, fundamental principles, or general knowledge relevant to the problem before addressing the specific query.&lt;/p&gt;
+&lt;p&gt;By decomposing complex problems into more manageable components and establishing foundational knowledge first, the model can provide more accurate responses to difficult questions.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-java&quot;&gt;// Implementation of Section 2.4: Step-back prompting
+public void pt_step_back_prompting(ChatClient.Builder chatClientBuilder) {
+    // Set common options for the chat client
+    var chatClient = chatClientBuilder
+            .defaultOptions(ChatOptions.builder()
+                    .model(&quot;claude-3-7-sonnet-latest&quot;)
+                    .temperature(1.0)
+                    .topK(40)
+                    .topP(0.8)
+                    .maxTokens(1024)
+                    .build())
+            .build();
+
+    // First get high-level concepts
+    String stepBack = chatClient
+            .prompt(&quot;&quot;&quot;
+                    Based on popular first-person shooter action games, what are
+                    5 fictional key settings that contribute to a challenging and
+                    engaging level storyline in a first-person shooter video game?
+                    &quot;&quot;&quot;)
+            .call()
+            .content();
+
+    // Then use those concepts in the main task
+    String story = chatClient
+            .prompt()
+            .user(u -&gt; u.text(&quot;&quot;&quot;
+                    Write a one paragraph storyline for a new level of a first-
+                    person shooter video game that is challenging and engaging.
+
+                    Context: {step-back}
+                    &quot;&quot;&quot;)
+                    .param(&quot;step-back&quot;, stepBack))
+            .call()
+            .content();
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Step-back prompting is particularly effective for complex reasoning tasks, problems requiring specialized domain knowledge, and when you want more comprehensive and thoughtful responses rather than immediate answers.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Reference:&lt;/strong&gt; Zheng, Z., et al. (2023). &quot;Take a Step Back: Evoking Reasoning via Abstraction in Large Language Models.&quot; arXiv:2310.06117. &lt;a href=&quot;https://arxiv.org/abs/2310.06117&quot;&gt;https://arxiv.org/abs/2310.06117&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&quot;25-chain-of-thought-cot&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#25-chain-of-thought-cot&quot; aria-label=&quot;25 chain of thought cot permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;2.5 Chain of Thought (CoT)&lt;/h3&gt;
+&lt;p&gt;Chain of Thought prompting encourages the model to reason step-by-step through a problem, which improves accuracy for complex reasoning tasks. By explicitly asking the model to show its work or think through a problem in logical steps, you can dramatically improve performance on tasks requiring multi-step reasoning.&lt;/p&gt;
+&lt;p&gt;CoT works by encouraging the model to generate intermediate reasoning steps before producing a final answer, similar to how humans solve complex problems. This makes the model&apos;s thinking process explicit and helps it arrive at more accurate conclusions.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-java&quot;&gt;// Implementation of Section 2.5: Chain of Thought (CoT) - Zero-shot approach
+public void pt_chain_of_thought_zero_shot(ChatClient chatClient) {
+    String output = chatClient
+            .prompt(&quot;&quot;&quot;
+                    When I was 3 years old, my partner was 3 times my age. Now,
+                    I am 20 years old. How old is my partner?
+
+                    Let&apos;s think step by step.
+                    &quot;&quot;&quot;)
+            .call()
+            .content();
 }
 
-dependencyManagement {
-  imports {
-    mavenBom &quot;org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}&quot;
-  }
+// Implementation of Section 2.5: Chain of Thought (CoT) - Few-shot approach
+public void pt_chain_of_thought_singleshot_fewshots(ChatClient chatClient) {
+    String output = chatClient
+            .prompt(&quot;&quot;&quot;
+                    Q: When my brother was 2 years old, I was double his age. Now
+                    I am 40 years old. How old is my brother? Let&apos;s think step
+                    by step.
+                    A: When my brother was 2 years, I was 2 * 2 = 4 years old.
+                    That&apos;s an age difference of 2 years and I am older. Now I am 40
+                    years old, so my brother is 40 - 2 = 38 years old. The answer
+                    is 38.
+                    Q: When I was 3 years old, my partner was 3 times my age. Now,
+                    I am 20 years old. How old is my partner? Let&apos;s think step
+                    by step.
+                    A:
+                    &quot;&quot;&quot;)
+            .call()
+            .content();
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The key phrase &quot;Let&apos;s think step by step&quot; triggers the model to show its reasoning process. CoT is especially valuable for mathematical problems, logical reasoning tasks, and any question requiring multi-step reasoning. It helps reduce errors by making intermediate reasoning explicit.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Reference:&lt;/strong&gt; Wei, J., et al. (2022). &quot;Chain-of-Thought Prompting Elicits Reasoning in Large Language Models.&quot; arXiv:2201.11903. &lt;a href=&quot;https://arxiv.org/abs/2201.11903&quot;&gt;https://arxiv.org/abs/2201.11903&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&quot;26-self-consistency&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#26-self-consistency&quot; aria-label=&quot;26 self consistency permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;2.6 Self-Consistency&lt;/h3&gt;
+&lt;p&gt;Self-consistency involves running the model multiple times and aggregating results for more reliable answers. This technique addresses the variability in LLM outputs by sampling diverse reasoning paths for the same problem and selecting the most consistent answer through majority voting.&lt;/p&gt;
+&lt;p&gt;By generating multiple reasoning paths with different temperature or sampling settings, then aggregating the final answers, self-consistency improves accuracy on complex reasoning tasks. It&apos;s essentially an ensemble method for LLM outputs.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-java&quot;&gt;// Implementation of Section 2.6: Self-consistency
+public void pt_self_consistency(ChatClient chatClient) {
+    String email = &quot;&quot;&quot;
+            Hi,
+            I have seen you use Wordpress for your website. A great open
+            source content management system. I have used it in the past
+            too. It comes with lots of great user plugins. And it&apos;s pretty
+            easy to set up.
+            I did notice a bug in the contact form, which happens when
+            you select the name field. See the attached screenshot of me
+            entering text in the name field. Notice the JavaScript alert
+            box that I inv0k3d.
+            But for the rest it&apos;s a great website. I enjoy reading it. Feel
+            free to leave the bug in the website, because it gives me more
+            interesting things to read.
+            Cheers,
+            Harry the Hacker.
+            &quot;&quot;&quot;;
+
+    record EmailClassification(Classification classification, String reasoning) {
+        enum Classification {
+            IMPORTANT, NOT_IMPORTANT
+        }
+    }
+
+    int importantCount = 0;
+    int notImportantCount = 0;
+
+    // Run the model 5 times with the same input
+    for (int i = 0; i &amp;#x3C; 5; i++) {
+        EmailClassification output = chatClient
+                .prompt()
+                .user(u -&gt; u.text(&quot;&quot;&quot;
+                        Email: {email}
+                        Classify the above email as IMPORTANT or NOT IMPORTANT. Let&apos;s
+                        think step by step and explain why.
+                        &quot;&quot;&quot;)
+                        .param(&quot;email&quot;, email))
+                .options(ChatOptions.builder()
+                        .temperature(1.0)  // Higher temperature for more variation
+                        .build())
+                .call()
+                .entity(EmailClassification.class);
+
+        // Count results
+        if (output.classification() == EmailClassification.Classification.IMPORTANT) {
+            importantCount++;
+        } else {
+            notImportantCount++;
+        }
+    }
+
+    // Determine the final classification by majority vote
+    String finalClassification = importantCount &gt; notImportantCount ? 
+            &quot;IMPORTANT&quot; : &quot;NOT IMPORTANT&quot;;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Self-consistency is particularly valuable for high-stakes decisions, complex reasoning tasks, and when you need more confident answers than a single response can provide. The trade-off is increased computational cost and latency due to multiple API calls.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Reference:&lt;/strong&gt; Wang, X., et al. (2022). &quot;Self-Consistency Improves Chain of Thought Reasoning in Language Models.&quot; arXiv:2203.11171. &lt;a href=&quot;https://arxiv.org/abs/2203.11171&quot;&gt;https://arxiv.org/abs/2203.11171&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&quot;27-tree-of-thoughts-tot&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#27-tree-of-thoughts-tot&quot; aria-label=&quot;27 tree of thoughts tot permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;2.7 Tree of Thoughts (ToT)&lt;/h3&gt;
+&lt;p&gt;Tree of Thoughts (ToT) is an advanced reasoning framework that extends Chain of Thought by exploring multiple reasoning paths simultaneously. It treats problem-solving as a search process where the model generates different intermediate steps, evaluates their promise, and explores the most promising paths.&lt;/p&gt;
+&lt;p&gt;This technique is particularly powerful for complex problems with multiple possible approaches or when the solution requires exploring various alternatives before finding the optimal path.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;NOTE: The original &quot;Prompt Engineering&quot; guide doesn&apos;t provide implementation examples for ToT, likely due to its complexity. Below is a simplified example that demonstrates the core concept.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Game Solving ToT Example:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-java&quot;&gt;// Implementation of Section 2.7: Tree of Thoughts (ToT) - Game solving example
+public void pt_tree_of_thoughts_game(ChatClient chatClient) {
+    // Step 1: Generate multiple initial moves
+    String initialMoves = chatClient
+            .prompt(&quot;&quot;&quot;
+                    You are playing a game of chess. The board is in the starting position.
+                    Generate 3 different possible opening moves. For each move:
+                    1. Describe the move in algebraic notation
+                    2. Explain the strategic thinking behind this move
+                    3. Rate the move&apos;s strength from 1-10
+                    &quot;&quot;&quot;)
+            .options(ChatOptions.builder()
+                    .temperature(0.7)
+                    .build())
+            .call()
+            .content();
+    
+    // Step 2: Evaluate and select the most promising move
+    String bestMove = chatClient
+            .prompt()
+            .user(u -&gt; u.text(&quot;&quot;&quot;
+                    Analyze these opening moves and select the strongest one:
+                    {moves}
+                    
+                    Explain your reasoning step by step, considering:
+                    1. Position control
+                    2. Development potential
+                    3. Long-term strategic advantage
+                    
+                    Then select the single best move.
+                    &quot;&quot;&quot;).param(&quot;moves&quot;, initialMoves))
+            .call()
+            .content();
+    
+    // Step 3: Explore future game states from the best move
+    String gameProjection = chatClient
+            .prompt()
+            .user(u -&gt; u.text(&quot;&quot;&quot;
+                    Based on this selected opening move:
+                    {best_move}
+                    
+                    Project the next 3 moves for both players. For each potential branch:
+                    1. Describe the move and counter-move
+                    2. Evaluate the resulting position
+                    3. Identify the most promising continuation
+                    
+                    Finally, determine the most advantageous sequence of moves.
+                    &quot;&quot;&quot;).param(&quot;best_move&quot;, bestMove))
+            .call()
+            .content();
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;strong&gt;Reference:&lt;/strong&gt; Yao, S., et al. (2023). &quot;Tree of Thoughts: Deliberate Problem Solving with Large Language Models.&quot; arXiv:2305.10601. &lt;a href=&quot;https://arxiv.org/abs/2305.10601&quot;&gt;https://arxiv.org/abs/2305.10601&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&quot;28-automatic-prompt-engineering&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#28-automatic-prompt-engineering&quot; aria-label=&quot;28 automatic prompt engineering permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;2.8 Automatic Prompt Engineering&lt;/h3&gt;
+&lt;p&gt;Automatic Prompt Engineering uses the AI to generate and evaluate alternative prompts. This meta-technique leverages the language model itself to create, refine, and benchmark different prompt variations to find optimal formulations for specific tasks.&lt;/p&gt;
+&lt;p&gt;By systematically generating and evaluating prompt variations, APE can find more effective prompts than manual engineering, especially for complex tasks. It&apos;s a way of using AI to improve its own performance.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-java&quot;&gt;// Implementation of Section 2.8: Automatic Prompt Engineering
+public void pt_automatic_prompt_engineering(ChatClient chatClient) {
+    // Generate variants of the same request
+    String orderVariants = chatClient
+            .prompt(&quot;&quot;&quot;
+                    We have a band merchandise t-shirt webshop, and to train a
+                    chatbot we need various ways to order: &quot;One Metallica t-shirt
+                    size S&quot;. Generate 10 variants, with the same semantics but keep
+                    the same meaning.
+                    &quot;&quot;&quot;)
+            .options(ChatOptions.builder()
+                    .temperature(1.0)  // High temperature for creativity
+                    .build())
+            .call()
+            .content();
+
+    // Evaluate and select the best variant
+    String output = chatClient
+            .prompt()
+            .user(u -&gt; u.text(&quot;&quot;&quot;
+                    Please perform BLEU (Bilingual Evaluation Understudy) evaluation on the following variants:
+                    ----
+                    {variants}
+                    ----
+
+                    Select the instruction candidate with the highest evaluation score.
+                    &quot;&quot;&quot;).param(&quot;variants&quot;, orderVariants))
+            .call()
+            .content();
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;APE is particularly valuable for optimizing prompts for production systems, addressing challenging tasks where manual prompt engineering has reached its limits, and for systematically improving prompt quality at scale.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Reference:&lt;/strong&gt; Zhou, Y., et al. (2022). &quot;Large Language Models Are Human-Level Prompt Engineers.&quot; arXiv:2211.01910. &lt;a href=&quot;https://arxiv.org/abs/2211.01910&quot;&gt;https://arxiv.org/abs/2211.01910&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&quot;29-code-prompting&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#29-code-prompting&quot; aria-label=&quot;29 code prompting permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;2.9 Code Prompting&lt;/h3&gt;
+&lt;p&gt;Code prompting refers to specialized techniques for code-related tasks. These techniques leverage LLMs&apos; ability to understand and generate programming languages, enabling them to write new code, explain existing code, debug issues, and translate between languages.&lt;/p&gt;
+&lt;p&gt;Effective code prompting typically involves clear specifications, appropriate context (libraries, frameworks, style guidelines), and sometimes examples of similar code. Temperature settings tend to be lower (0.1-0.3) for more deterministic outputs.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-java&quot;&gt;// Implementation of Section 2.9.1: Prompts for writing code
+public void pt_code_prompting_writing_code(ChatClient chatClient) {
+    String bashScript = chatClient
+            .prompt(&quot;&quot;&quot;
+                    Write a code snippet in Bash, which asks for a folder name.
+                    Then it takes the contents of the folder and renames all the
+                    files inside by prepending the name draft to the file name.
+                    &quot;&quot;&quot;)
+            .options(ChatOptions.builder()
+                    .temperature(0.1)  // Low temperature for deterministic code
+                    .build())
+            .call()
+            .content();
 }
 
-//...
+// Implementation of Section 2.9.2: Prompts for explaining code
+public void pt_code_prompting_explaining_code(ChatClient chatClient) {
+    String code = &quot;&quot;&quot;
+            #!/bin/bash
+            echo &quot;Enter the folder name: &quot;
+            read folder_name
+            if [ ! -d &quot;$folder_name&quot; ]; then
+            echo &quot;Folder does not exist.&quot;
+            exit 1
+            fi
+            files=( &quot;$folder_name&quot;/* )
+            for file in &quot;${files[@]}&quot;; do
+            new_file_name=&quot;draft_$(basename &quot;$file&quot;)&quot;
+            mv &quot;$file&quot; &quot;$new_file_name&quot;
+            done
+            echo &quot;Files renamed successfully.&quot;
+            &quot;&quot;&quot;;
 
-&lt;/code&gt;&lt;/pre&gt;</content:encoded></item><item><title><![CDATA[A Bootiful Podcast: Dr. Dave Syer on the new and nifty Spring gRPC project]]></title><link>https://spring.io/blog/2025/01/09/a-bootiful-podcast-dr-dave-syer-on-spring-grpc</link><guid isPermaLink="true">https://spring.io/blog/2025/01/09/a-bootiful-podcast-dr-dave-syer-on-spring-grpc</guid><dc:creator><![CDATA[joshlong]]></dc:creator><pubDate>Thu, 09 Jan 2025 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;Hi, Spring fans! In this installment I talk to the good and the great Dr. Dave Syer about the (experimental!) new Spring gRPC project!&lt;/p&gt;
-&lt;iframe title=&quot;Dr. Dave Syer on the new and nifty Spring gRPC project&quot; allowtransparency=&quot;true&quot; height=&quot;300&quot; width=&quot;100%&quot; style=&quot;border: none; min-width: min(100%, 430px);height:300px;&quot; scrolling=&quot;no&quot; data-name=&quot;pb-iframe-player&quot; src=&quot;https://www.podbean.com/player-v2/?from=embed&amp;i=48bvy-17a1157-pb&amp;square=1&amp;share=1&amp;download=1&amp;fonts=Arial&amp;skin=1&amp;font-color=&amp;rtl=0&amp;logo_link=&amp;btn-skin=7&amp;size=300&quot; loading=&quot;lazy&quot; allowfullscreen=&quot;&quot;&gt;&lt;/iframe&gt;</content:encoded></item></channel></rss>
+    String explanation = chatClient
+            .prompt()
+            .user(u -&gt; u.text(&quot;&quot;&quot;
+                    Explain to me the below Bash code:
+                    ```
+                    {code}
+                    ```
+                    &quot;&quot;&quot;).param(&quot;code&quot;, code))
+            .call()
+            .content();
+}
+
+// Implementation of Section 2.9.3: Prompts for translating code
+public void pt_code_prompting_translating_code(ChatClient chatClient) {
+    String bashCode = &quot;&quot;&quot;
+            #!/bin/bash
+            echo &quot;Enter the folder name: &quot;
+            read folder_name
+            if [ ! -d &quot;$folder_name&quot; ]; then
+            echo &quot;Folder does not exist.&quot;
+            exit 1
+            fi
+            files=( &quot;$folder_name&quot;/* )
+            for file in &quot;${files[@]}&quot;; do
+            new_file_name=&quot;draft_$(basename &quot;$file&quot;)&quot;
+            mv &quot;$file&quot; &quot;$new_file_name&quot;
+            done
+            echo &quot;Files renamed successfully.&quot;
+            &quot;&quot;&quot;;
+
+    String pythonCode = chatClient
+            .prompt()
+            .user(u -&gt; u.text(&quot;&quot;&quot;
+                    Translate the below Bash code to a Python snippet:                        
+                    {code}                        
+                    &quot;&quot;&quot;).param(&quot;code&quot;, bashCode))
+            .call()
+            .content();
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Code prompting is especially valuable for automated code documentation, prototyping, learning programming concepts, and translating between programming languages. The effectiveness can be further enhanced by combining it with techniques like few-shot prompting or chain-of-thought.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Reference:&lt;/strong&gt; Chen, M., et al. (2021). &quot;Evaluating Large Language Models Trained on Code.&quot; arXiv:2107.03374. &lt;a href=&quot;https://arxiv.org/abs/2107.03374&quot;&gt;https://arxiv.org/abs/2107.03374&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&quot;conclusion&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#conclusion&quot; aria-label=&quot;conclusion permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Conclusion&lt;/h2&gt;
+&lt;p&gt;Spring AI provides an elegant Java API for implementing all major prompt engineering techniques. By combining these techniques with Spring&apos;s powerful entity mapping and fluent API, developers can build sophisticated AI-powered applications with clean, maintainable code.&lt;/p&gt;
+&lt;p&gt;The most effective approach often involves combining multiple techniques—for example, using system prompts with few-shot examples, or chain-of-thought with role prompting. Spring AI&apos;s flexible API makes these combinations straightforward to implement.&lt;/p&gt;
+&lt;p&gt;For production applications, remember to:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Test prompts with different parameters (temperature, top-k, top-p)&lt;/li&gt;
+&lt;li&gt;Consider using self-consistency for critical decision-making&lt;/li&gt;
+&lt;li&gt;Leverage Spring AI&apos;s entity mapping for type-safe responses&lt;/li&gt;
+&lt;li&gt;Use contextual prompting to provide application-specific knowledge&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;With these techniques and Spring AI&apos;s powerful abstractions, you can create robust AI-powered applications that deliver consistent, high-quality results.&lt;/p&gt;
+&lt;h2 id=&quot;references&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#references&quot; aria-label=&quot;references permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;References&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;Brown, T. B., et al. (2020). &quot;Language Models are Few-Shot Learners.&quot; arXiv:2005.14165.&lt;/li&gt;
+&lt;li&gt;Wei, J., et al. (2022). &quot;Chain-of-Thought Prompting Elicits Reasoning in Large Language Models.&quot; arXiv:2201.11903.&lt;/li&gt;
+&lt;li&gt;Wang, X., et al. (2022). &quot;Self-Consistency Improves Chain of Thought Reasoning in Language Models.&quot; arXiv:2203.11171.&lt;/li&gt;
+&lt;li&gt;Yao, S., et al. (2023). &quot;Tree of Thoughts: Deliberate Problem Solving with Large Language Models.&quot; arXiv:2305.10601.&lt;/li&gt;
+&lt;li&gt;Zhou, Y., et al. (2022). &quot;Large Language Models Are Human-Level Prompt Engineers.&quot; arXiv:2211.01910.&lt;/li&gt;
+&lt;li&gt;Zheng, Z., et al. (2023). &quot;Take a Step Back: Evoking Reasoning via Abstraction in Large Language Models.&quot; arXiv:2310.06117.&lt;/li&gt;
+&lt;li&gt;Liu, P., et al. (2021). &quot;What Makes Good In-Context Examples for GPT-3?&quot; arXiv:2101.06804.&lt;/li&gt;
+&lt;li&gt;Shanahan, M., et al. (2023). &quot;Role-Play with Large Language Models.&quot; arXiv:2305.16367.&lt;/li&gt;
+&lt;li&gt;Chen, M., et al. (2021). &quot;Evaluating Large Language Models Trained on Code.&quot; arXiv:2107.03374.&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://docs.spring.io/spring-ai/reference/index.html&quot;&gt;Spring AI Documentation&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://docs.spring.io/spring-ai/reference/api/chatclient.html&quot;&gt;ChatClient API Reference&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://www.kaggle.com/whitepaper-prompt-engineering&quot;&gt;Google&apos;s Prompt Engineering Guide&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;</content:encoded></item><item><title><![CDATA[A Bootiful Podcast: Wiremock's leaders Lee Turner and Tom Akehurst]]></title><link>https://spring.io/blog/2025/04/10/a-bootiful-podcast-wiremock</link><guid isPermaLink="true">https://spring.io/blog/2025/04/10/a-bootiful-podcast-wiremock</guid><dc:creator><![CDATA[joshlong]]></dc:creator><pubDate>Thu, 10 Apr 2025 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;Hi, Spring fans! In this installment we talk to Wiremock&apos;s leaders Lee Turner and Tom Akehurst&lt;/p&gt;
+&lt;iframe title=&quot;Wiremock’s Lee Turner and Tom Akehurst&quot; allowtransparency=&quot;true&quot; height=&quot;300&quot; width=&quot;100%&quot; style=&quot;border: none; min-width: min(100%, 430px);height:300px;&quot; scrolling=&quot;no&quot; data-name=&quot;pb-iframe-player&quot; src=&quot;https://www.podbean.com/player-v2/?from=embed&amp;i=sma3y-18791be-pb&amp;square=1&amp;share=1&amp;download=1&amp;fonts=Arial&amp;skin=1&amp;font-color=&amp;rtl=0&amp;logo_link=&amp;btn-skin=7&amp;size=300&quot; loading=&quot;lazy&quot; allowfullscreen=&quot;&quot;&gt;&lt;/iframe&gt;</content:encoded></item><item><title><![CDATA[Using Spring AI 1.0.0 M7 Released]]></title><link>https://spring.io/blog/2025/04/10/spring-ai-1-0-0-m7-released</link><guid isPermaLink="true">https://spring.io/blog/2025/04/10/spring-ai-1-0-0-m7-released</guid><dc:creator><![CDATA[markpollack]]></dc:creator><pubDate>Thu, 10 Apr 2025 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;We are excited to announce the release of Spring AI 1.0.0 Milestone 7.
+This will be the last milestone release.  Next month will be the RC1 release followed quickly by a GA release in time for the Spring IO conference in Barcelona.&lt;/p&gt;
+&lt;p&gt;To celebrate this release, we have added a new song to our &lt;a href=&quot;https://suno.com/playlist/321b61a4-201d-4404-9335-bf909250b0e3&quot;&gt;AI-generated music playlist&lt;/a&gt; featuring lyrics by Josh Long and Claude! Check out the &lt;a href=&quot;https://suno.com/song/4bb83777-94e1-4599-87a9-f82dfad9ae39?sh=EKOSdjJKcfhCBApi&quot;&gt;latest track&lt;/a&gt; to enhance your blog reading and coding experience.&lt;/p&gt;
+&lt;p&gt;Here are the key changes in this release.  Note, there are breaking changes!&lt;/p&gt;
+&lt;h2 id=&quot;breaking-changes&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#breaking-changes&quot; aria-label=&quot;breaking changes permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Breaking Changes&lt;/h2&gt;
+&lt;p&gt;Spring AI 1.0.0-M7 introduces several important changes that align with the structural improvements previously introduced in the SNAPSHOT versions. These changes create a more modular and maintainable codebase while reducing unnecessary dependencies in your applications.&lt;/p&gt;
+&lt;h2 id=&quot;artifact-id-changes&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#artifact-id-changes&quot; aria-label=&quot;artifact id changes permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Artifact ID Changes&lt;/h2&gt;
+&lt;p&gt;The most significant change is the naming pattern for Spring AI starter artifacts:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Model starters: &lt;code&gt;spring-ai-{model}-spring-boot-starter&lt;/code&gt; ? &lt;code&gt;spring-ai-starter-model-{model}&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Vector Store starters: &lt;code&gt;spring-ai-{store}-store-spring-boot-starter&lt;/code&gt; ? &lt;code&gt;spring-ai-starter-vector-store-{store}&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;MCP starters: &lt;code&gt;spring-ai-mcp-{type}-spring-boot-starter&lt;/code&gt; ? &lt;code&gt;spring-ai-starter-mcp-{type}&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&quot;package-changes&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#package-changes&quot; aria-label=&quot;package changes permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Package Changes&lt;/h2&gt;
+&lt;p&gt;Some classes have moved to new packages to better reflect their domain responsibilities:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;KeywordMetadataEnricher&lt;/code&gt; and &lt;code&gt;SummaryMetadataEnricher&lt;/code&gt; moved from &lt;code&gt;org.springframework.ai.transformer&lt;/code&gt; to &lt;code&gt;org.springframework.ai.chat.transformer&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Content&lt;/code&gt;, &lt;code&gt;MediaContent&lt;/code&gt;, and &lt;code&gt;Media&lt;/code&gt; moved from &lt;code&gt;org.springframework.ai.model&lt;/code&gt; to &lt;code&gt;org.springframework.ai.content&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Your IDE should easily be able to handle these refactorings.&lt;/p&gt;
+&lt;h2 id=&quot;new-module-structure&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#new-module-structure&quot; aria-label=&quot;new module structure permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;New Module Structure&lt;/h2&gt;
+&lt;p&gt;As detailed in the Core Architecture Improvements section above, the project has been restructured from a monolithic core into specialized domain modules.&lt;/p&gt;
+&lt;p&gt;This modular approach allows you to include only the functionality you need, resulting in smaller deployments and clearer boundaries between components.&lt;/p&gt;
+&lt;p&gt;Importantly, &lt;strong&gt;this change should not be a breaking change if you use the Spring AI starters&lt;/strong&gt; since they now import the new modular dependencies automatically. Only applications that directly referenced the previous monolithic artifacts will need to update their dependencies.&lt;/p&gt;
+&lt;h2 id=&quot;toolcontext-changes&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#toolcontext-changes&quot; aria-label=&quot;toolcontext changes permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;ToolContext Changes&lt;/h2&gt;
+&lt;p&gt;The &lt;code&gt;ToolContext&lt;/code&gt; class has been enhanced to support both explicit and implicit tool resolution, with tools only included in model calls when explicitly requested.&lt;/p&gt;
+&lt;h2 id=&quot;additional-resources&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#additional-resources&quot; aria-label=&quot;additional resources permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Additional Resources&lt;/h2&gt;
+&lt;p&gt;For more details on these changes, refer to:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://spring.io/blog/2025/03/25/spring-ai-update-to-snapshots&quot;&gt;Spring AI Update to Snapshots&lt;/a&gt; - Initial announcement of structural changes&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://spring.io/blog/2025/04/04/spring-ai-using-snapshots-part-2&quot;&gt;Spring AI Using Snapshots Part 2&lt;/a&gt; - Detailed explanation of module restructuring&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://docs.spring.io/spring-ai/reference/upgrade-notes.html#upgrading-to-1-0-0-m7&quot;&gt;Upgrade Notes&lt;/a&gt; in the reference guide&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;There are two ways to update your projects to Spring AI 1.0.0-M7:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Use the &lt;a href=&quot;https://docs.anthropic.com/en/docs/agents-and-tools/claude-code/overview&quot;&gt;Claude Code CLI tool&lt;/a&gt; tool with this &lt;a href=&quot;https://github.com/spring-projects/spring-ai/blob/main/src/prompts/update-to-m7.txt&quot;&gt;prompt&lt;/a&gt;. You can use other AI assistant tools as well, but we have only tested using Claude Code. Note that this automated approach handles artifact ID changes, package relocations, and module structure changes, but does not yet include automatic changes for upgrading to MCP 0.9.0.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Refer to the &lt;a href=&quot;https://docs.spring.io/spring-ai/reference/upgrade-notes.html#upgrading-to-1-0-0-m7&quot;&gt;Upgrade Notes&lt;/a&gt; for detailed instructions, including guidance on manually updating MCP-related code.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&quot;core-architecture-improvements&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#core-architecture-improvements&quot; aria-label=&quot;core architecture improvements permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Core Architecture Improvements&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Comprehensive Modular Architecture&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Completely restructured the project from a monolithic core into specialized domain modules, providing:
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Reduced Dependency Footprint&lt;/strong&gt;: Applications only need to include the modules they actually use&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Minimized Transitive Dependencies&lt;/strong&gt;: Fewer conflicts with third-party libraries&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Cleaner Separation of Concerns&lt;/strong&gt;: Each module has a well-defined responsibility&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src=&quot;https://static.spring.io/blog/tzolov/20250410/spring-ai-module-dependencies.png&quot; alt=&quot;Spring AI Dependencies&quot;&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;spring-ai-commons&lt;/code&gt;: Foundation module with no dependencies on other Spring AI modules
+&lt;ul&gt;
+&lt;li&gt;Core domain models (&lt;code&gt;Document&lt;/code&gt;, &lt;code&gt;TextSplitter&lt;/code&gt;, etc.)&lt;/li&gt;
+&lt;li&gt;JSON utilities and resource handling&lt;/li&gt;
+&lt;li&gt;Structured logging and observability support&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;spring-ai-model&lt;/code&gt;: Builds on commons to provide AI capability abstractions
+&lt;ul&gt;
+&lt;li&gt;Interfaces like &lt;code&gt;ChatModel&lt;/code&gt;, &lt;code&gt;EmbeddingModel&lt;/code&gt;, and &lt;code&gt;ImageModel&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Message types and prompt templates&lt;/li&gt;
+&lt;li&gt;Function-calling framework (&lt;code&gt;ToolDefinition&lt;/code&gt;, &lt;code&gt;ToolCallback&lt;/code&gt;)&lt;/li&gt;
+&lt;li&gt;Content filtering and observation support&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;spring-ai-vector-store&lt;/code&gt;: Unified vector database abstraction
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;VectorStore&lt;/code&gt; interface for similarity search&lt;/li&gt;
+&lt;li&gt;Advanced filtering with SQL-like expressions&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;SimpleVectorStore&lt;/code&gt; for in-memory usage&lt;/li&gt;
+&lt;li&gt;Batching support for embeddings&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;spring-ai-client-chat&lt;/code&gt;: High-level conversational AI APIs
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;ChatClient&lt;/code&gt; interface&lt;/li&gt;
+&lt;li&gt;Conversation persistence via &lt;code&gt;ChatMemory&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Response conversion with &lt;code&gt;OutputConverter&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Advisor-based interception&lt;/li&gt;
+&lt;li&gt;Synchronous and reactive streaming support&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;spring-ai-advisors-vector-store&lt;/code&gt;: Bridges chat with vector stores for RAG
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;QuestionAnswerAdvisor&lt;/code&gt;: injects context into prompts&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;VectorStoreChatMemoryAdvisor&lt;/code&gt;: stores/retrieves conversation history&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;spring-ai-model-chat-memory-*&lt;/code&gt;: Specialized persistence implementations
+&lt;ul&gt;
+&lt;li&gt;Cassandra, Neo4j, and JDBC implementations&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;spring-ai-rag&lt;/code&gt;: Comprehensive framework for Retrieval Augmented Generation
+&lt;ul&gt;
+&lt;li&gt;Modular architecture for RAG pipelines&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;RetrievalAugmentationAdvisor&lt;/code&gt; as main entry point&lt;/li&gt;
+&lt;li&gt;Functional programming principles with composable components&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Modular Autoconfiguration&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Replaced the single monolithic autoconfiguration artifact with individual autoconfiguration artifacts per component:
+&lt;ul&gt;
+&lt;li&gt;Model autoconfiguration: &lt;code&gt;spring-ai-autoconfigure-model-{model}&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Vector Store autoconfiguration: &lt;code&gt;spring-ai-autoconfigure-vector-store-{store}&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;MCP autoconfiguration: &lt;code&gt;spring-ai-autoconfigure-mcp-{type}&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;This change minimizes dependency conflicts with libraries like Google Protocol Buffers and gRPC&lt;/li&gt;
+&lt;li&gt;Applications now only include the autoconfiguration for components they actually use&lt;/li&gt;
+&lt;li&gt;These autoconfiguration artifacts are included transitively when using the corresponding starter dependencies&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Package Reorganization&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Strategic relocation of classes to better reflect their domain responsibilities:
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;KeywordMetadataEnricher&lt;/code&gt; and &lt;code&gt;SummaryMetadataEnricher&lt;/code&gt; moved from &lt;code&gt;org.springframework.ai.transformer&lt;/code&gt; to &lt;code&gt;org.springframework.ai.chat.transformer&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Content&lt;/code&gt;, &lt;code&gt;MediaContent&lt;/code&gt;, and &lt;code&gt;Media&lt;/code&gt; moved from &lt;code&gt;org.springframework.ai.model&lt;/code&gt; to &lt;code&gt;org.springframework.ai.content&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Improved package naming conventions for better discoverability and organization&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Framework Enhancements&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Added AOP proxy support to MethodToolCallbackProvider for more flexible integration&lt;/li&gt;
+&lt;li&gt;Enhanced runtime hints configuration for JSON serialization to improve native image support&lt;/li&gt;
+&lt;li&gt;Improved Spring Boot integration with standardized configurations&lt;/li&gt;
+&lt;li&gt;Enhanced observability and metrics collection across all modules&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&quot;upgrade-to-mcp-090&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#upgrade-to-mcp-090&quot; aria-label=&quot;upgrade to mcp 090 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Upgrade to MCP 0.9.0&lt;/h2&gt;
+&lt;p&gt;Spring AI 1.0.0-M7 integrates the latest MCP reference implementation Java SDK version 0.9.0, bringing significant architectural improvements:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Session-Based Architecture&lt;/strong&gt;: Improved handling of multiple concurrent client connections with better isolation between sessions&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Exchange-Based Interactions&lt;/strong&gt;: New exchange objects provide context-aware interactions between clients and servers&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Enhanced Transport Provider Abstraction&lt;/strong&gt;: Cleaner separation between connection management and communication handling&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Improved Tool Management&lt;/strong&gt;: Better tool name handling and de-duplication to avoid conflicts in complex scenarios&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Simplified Server Configuration&lt;/strong&gt;: Streamlined API for configuring and managing MCP servers&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Comprehensive WebFlux and WebMvc Support&lt;/strong&gt;: Enhanced transport providers for both reactive and servlet-based applications&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;These improvements result in a more robust, scalable MCP implementation that better aligns with the MCP specification. For detailed migration guidance, refer to the &lt;a href=&quot;https://docs.spring.io/spring-ai/reference/upgrade-notes.html#upgrading-to-1-0-0-m7&quot;&gt;Upgrade Notes&lt;/a&gt; section on MCP Java SDK changes.&lt;/p&gt;
+&lt;p&gt;All examples in the &lt;a href=&quot;https://github.com/spring-projects/spring-ai-examples/tree/main/model-context-protocol&quot;&gt;Spring AI Examples repository&lt;/a&gt; have been updated to work with the latest MCP implementation.&lt;/p&gt;
+&lt;h2 id=&quot;new-and-enhanced-model-integrations&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#new-and-enhanced-model-integrations&quot; aria-label=&quot;new and enhanced model integrations permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;New and Enhanced Model Integrations&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Anthropic Claude Updates&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Added support for Claude 3.7 Sonnet model and made it the default&lt;/li&gt;
+&lt;li&gt;Enhanced with &quot;thinking&quot; capability (THINKING and REDACTED_THINKING blocks)&lt;/li&gt;
+&lt;li&gt;Renamed function-related APIs to tool-related APIs for consistency&lt;/li&gt;
+&lt;li&gt;Added support for custom HTTP headers in Anthropic API requests&lt;/li&gt;
+&lt;li&gt;Improved options with equals, hashCode, and deep copy support&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Mistral AI Enhancements&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Added moderation model support for detecting potentially harmful content&lt;/li&gt;
+&lt;li&gt;Implemented custom structured output with JSON schema capabilities&lt;/li&gt;
+&lt;li&gt;Enhanced safety features and content filtering&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Ollama Improvements&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Added min_p parameter for improved sampling control&lt;/li&gt;
+&lt;li&gt;Added support for qwq model&lt;/li&gt;
+&lt;li&gt;Added support for LLAMA3_2_3B model&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Azure OpenAI Updates&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Enhanced AzureOpenAiChatOptions&lt;/li&gt;
+&lt;li&gt;Fixed auto-configuration opt-in behavior&lt;/li&gt;
+&lt;li&gt;Improved integration with Azure services&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;OpenAI Enhancements&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Changed voice parameter to string in OpenAI Audio Speech API&lt;/li&gt;
+&lt;li&gt;Added missing audio formats for OpenAI Audio API&lt;/li&gt;
+&lt;li&gt;Enhanced OpenAiChatOptions with equals, hashCode, and deep copy features&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&quot;docker-model-runner-support&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#docker-model-runner-support&quot; aria-label=&quot;docker model runner support permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Docker Model Runner Support&lt;/h2&gt;
+&lt;p&gt;Spring AI 1.0.0-M7 adds support for Docker Desktop 4.40&apos;s Model Runner, providing a seamless integration with locally running AI models:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;OpenAI-Compatible API&lt;/strong&gt;: Docker Model Runner provides a local Inference API designed to be compatible with the OpenAI API, enabling easy integration with Spring AI&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Standard OCI Artifacts&lt;/strong&gt;: Models are distributed as standard OCI artifacts on Docker Hub under the &lt;a href=&quot;https://hub.docker.com/u/ai&quot;&gt;ai namespace&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Multiple Configuration Options&lt;/strong&gt;:
+&lt;ul&gt;
+&lt;li&gt;Direct TCP connection to the Model Runner&lt;/li&gt;
+&lt;li&gt;Integration via Testcontainers for development and testing&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Simple Configuration&lt;/strong&gt;: Just configure the OpenAI client with a custom base URL:
+&lt;pre&gt;&lt;code class=&quot;language-properties&quot;&gt;spring.ai.openai.api-key=ignored
+spring.ai.openai.base-url=http://localhost:12434/engines
+spring.ai.openai.chat.options.model=ai/gemma3
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Full Feature Support&lt;/strong&gt;: All Spring AI features including function calling, streaming, and more work with Docker Model Runner&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Local Model Execution&lt;/strong&gt;: Run models locally on Apple Silicon without sending data to external services&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;For detailed information, check out the &lt;a href=&quot;https://docs.spring.io/spring-ai/reference/api/chat/dmr-chat.html&quot;&gt;Spring AI Docker Model Runner documentation&lt;/a&gt; and our accompanying blog post &lt;a href=&quot;https://spring.io/blog/2025/04/10/spring-ai-docker-model-runner&quot;&gt;Spring AI with Docker Model Runner&lt;/a&gt; that dives deeper into this integration.&lt;/p&gt;
+&lt;p&gt;Special thanks to &lt;a href=&quot;https://github.com/eddumelendez&quot;&gt;Eddú Meléndez&lt;/a&gt; for his significant contributions to this feature.&lt;/p&gt;
+&lt;h2 id=&quot;tool-and-multimodal-capabilities&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#tool-and-multimodal-capabilities&quot; aria-label=&quot;tool and multimodal capabilities permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Tool and Multimodal Capabilities&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Tool Execution Framework&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Introduced ToolExecutionEligibilityPredicate interface&lt;/li&gt;
+&lt;li&gt;Improved tool de-duplication by name in MCP server&lt;/li&gt;
+&lt;li&gt;Enhanced error handling in MCP tool callbacks&lt;/li&gt;
+&lt;li&gt;Standardized MCP tool name formatting&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Multimodality Support&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Support for base64-encoded images in tool call results&lt;/li&gt;
+&lt;li&gt;Handling of base64-encoded images in JSON responses&lt;/li&gt;
+&lt;li&gt;Enhanced image conversion capabilities&lt;/li&gt;
+&lt;li&gt;Support for custom MIME types in tool responses&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Document Processing&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Added JSoup HTML document reader for web content parsing&lt;/li&gt;
+&lt;li&gt;Enhanced document formatting capabilities&lt;/li&gt;
+&lt;li&gt;Added documentFormatter parameter to ContextualQueryAugmenter&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&quot;memory-and-storage&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#memory-and-storage&quot; aria-label=&quot;memory and storage permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Memory and Storage&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Chat Memory Implementations&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Added JDBC implementation of ChatMemory&lt;/li&gt;
+&lt;li&gt;Migrated Cassandra chat memory implementation to its own module&lt;/li&gt;
+&lt;li&gt;Added Neo4j chat memory implementation&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Vector Store Enhancements&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Added Couchbase vector store support&lt;/li&gt;
+&lt;li&gt;Removed assertions on partition key path in CosmosDBVectorStore&lt;/li&gt;
+&lt;li&gt;Enhanced Milvus vector store with native expressions&lt;/li&gt;
+&lt;li&gt;Added configuration options for database collections in Milvus&lt;/li&gt;
+&lt;li&gt;Conditional enablement of individual vector store implementations&lt;/li&gt;
+&lt;li&gt;Enhanced PgVectorStore with PgIdType based schema generation&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&quot;query-processing&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#query-processing&quot; aria-label=&quot;query processing permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Query Processing&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;Retrieval Augmentation&lt;/strong&gt;
+&lt;ul&gt;
+&lt;li&gt;Added Context Support to Query in RetrievalAugmentationAdvisor&lt;/li&gt;
+&lt;li&gt;Removed default temperature on all QueryTransformer implementations&lt;/li&gt;
+&lt;li&gt;Enhanced context handling for improved relevance&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&quot;developer-experience&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#developer-experience&quot; aria-label=&quot;developer experience permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Developer Experience&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Spring Boot Integration&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Updated supported Spring Boot versions&lt;/li&gt;
+&lt;li&gt;Improved auto-configuration patterns&lt;/li&gt;
+&lt;li&gt;Added boot configuration processor to MCP autoconfiguration&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;AOT and Native Image Support&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Improved ahead-of-time compilation support&lt;/li&gt;
+&lt;li&gt;Enhanced runtime hints for native image compatibility&lt;/li&gt;
+&lt;li&gt;Comprehensive scan for JsonInclude annotations&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Documentation&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Added upgrade notes for migrating to M7&lt;/li&gt;
+&lt;li&gt;Improved module documentation with architectural diagrams&lt;/li&gt;
+&lt;li&gt;Enhanced API documentation for new features&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&quot;contributors&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#contributors&quot; aria-label=&quot;contributors permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Contributors&lt;/h2&gt;
+&lt;p&gt;There were other refactoring, bug fixing, documentation enhancements across the board by a wide range of contributors. If we haven&apos;t gotten to your PR yet, we will, please be patient. Thanks to&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/Ahoo-Wang&quot;&gt;Ahoo Wang (Ahoo-Wang)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/alexandreroman&quot;&gt;Alexandre Roman (alexandreroman)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/apappascs&quot;&gt;Alexandros Pappas (apappascs)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/bmamatkadyr&quot;&gt;Beksultan (bmamatkadyr)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/birariro&quot;&gt;birariro (birariro)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/cc0824&quot;&gt;cc0824 (cc0824)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/CChuYong&quot;&gt;CChuYong (CChuYong)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/tzolov&quot;&gt;Christian Tzolov (tzolov)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/chemicL&quot;&gt;Dariusz J?drzejczyk (chemicL)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/eddumelendez&quot;&gt;Eddú Meléndez (eddumelendez)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/emmanuel-ferdman&quot;&gt;Emmanuel Ferdman (emmanuel-ferdman)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/enrico.rampazzo&quot;&gt;Enrico Rampazzo (enrico.rampazzo)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/gabrielduncan&quot;&gt;gabriel duncan (gabrielduncan)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/garethjevans&quot;&gt;Gareth Evans (garethjevans)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/ghdcksgml1&quot;&gt;ghdcksgml1 (ghdcksgml1)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/GOODBOY008&quot;&gt;gongzhongqiang (GOODBOY008)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/Hushihaoooooo&quot;&gt;Hu Shihao (Hushihaoooooo)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/hungrytech&quot;&gt;hungrytech (hungrytech)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/ilayaperumalg&quot;&gt;Ilayaperumal Gopinathan (ilayaperumalg)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/Fj-ivy&quot;&gt;ivy (Fj-ivy)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/jaeyeonling&quot;&gt;Jaeyeon Kim (jaeyeonling)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/jitokim&quot;&gt;jito (jitokim)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/jonasmuriboe&quot;&gt;Jonas Muribø (jonasmuriboe)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/dev-jonghoonpark&quot;&gt;jonghoon park (dev-jonghoonpark)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/dev-jonghoonpark&quot;&gt;jonghoonpark (dev-jonghoonpark)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/JongInWon&quot;&gt;JongIn Won (JongInWon)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/joshlong&quot;&gt;Josh Long (joshlong)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/JustinMartz&quot;&gt;Justin Martz (JustinMartz)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/ldoguin&quot;&gt;Laurent Doguin (ldoguin)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/leijendary&quot;&gt;leijendary (leijendary)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/git102347501&quot;&gt;MagicalConch (git102347501)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/magicgone-cn&quot;&gt;magicgone (magicgone-cn)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/magware-dev&quot;&gt;Manuel Andreo Garcia (magware-dev)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/markpollack&quot;&gt;Mark Pollack (markpollack)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/yangtuooc&quot;&gt;mawenhao (yangtuooc)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/PSriVarshan&quot;&gt;P.Sri Varshan (PSriVarshan)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/ppjgit&quot;&gt;pavel (ppjgit)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/ricken07&quot;&gt;Ricken Bazolo (ricken07)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/rmalara&quot;&gt;rmalara (rmalara)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/krsamuel&quot;&gt;samuel-taleez (krsamuel)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/shahbazaamir&quot;&gt;shahbazaamir (shahbazaamir)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/yuluo-yx&quot;&gt;shown (yuluo-yx)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/sobychacko&quot;&gt;Soby Chacko (sobychacko)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/ThomasVitale&quot;&gt;Thomas Vitale (ThomasVitale)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/timosalm&quot;&gt;Timo Salm (timosalm)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/viacheslav-dobrynin&quot;&gt;Viacheslav Dobrynin (viacheslav-dobrynin)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/91wangmeng&quot;&gt;vker (91wangmeng)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/waileong&quot;&gt;waileong (waileong)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/wandile-gim&quot;&gt;Wandile (wandile-gim)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/xuweidong253&quot;&gt;xuweidong (xuweidong253)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/xwh1108&quot;&gt;Xwh (xwh1108)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/yangtuooc&quot;&gt;yangtuooc (yangtuooc)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/quaff&quot;&gt;Yanming Zhou (quaff)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/yybmion&quot;&gt;yoobin_mion (yybmion)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/Yufeng0918&quot;&gt;Yufeng (Yufeng0918)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/yeseong0412&quot;&gt;??? (yeseong0412)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/799332391&quot;&gt;?? (799332391)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/He-Pin&quot;&gt;?? (He-Pin)&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</content:encoded></item><item><title><![CDATA[Spring AI with Docker Model Runner]]></title><link>https://spring.io/blog/2025/04/10/spring-ai-docker-model-runner</link><guid isPermaLink="true">https://spring.io/blog/2025/04/10/spring-ai-docker-model-runner</guid><dc:creator><![CDATA[markpollack]]></dc:creator><pubDate>Thu, 10 Apr 2025 00:00:00 GMT</pubDate><content:encoded>&lt;blockquote&gt;
+&lt;p&gt;This blog post is authored by &lt;a href=&quot;https://github.com/eddumelendez&quot;&gt;Eddú Meléndez&lt;/a&gt;.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Docker recently &lt;a href=&quot;https://www.docker.com/blog/docker-desktop-4-40/&quot;&gt;released a Model Runner in Docker Desktop for Mac 4.40.0&lt;/a&gt; on Apple silicon. The Docker Model Runner provides a local Inference API designed to be compatible with the OpenAI API, enabling easy integration with &lt;a href=&quot;https://docs.spring.io/spring-ai/reference/api/chat/dmr-chat.html&quot;&gt;Spring AI&lt;/a&gt; as part of the Spring AI 1.0.0-M7 release. Models are distributed as standard OCI artifacts on Docker Hub under the &lt;a href=&quot;https://hub.docker.com/u/ai&quot;&gt;ai namespace&lt;/a&gt;.&lt;/p&gt;
+&lt;h2 id=&quot;prerequisites&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#prerequisites&quot; aria-label=&quot;prerequisites permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Prerequisites&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Download Docker Desktop for Mac 4.40.0.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Choose one of the following options to enable the Model Runner:&lt;/p&gt;
+&lt;p&gt;Option 1:&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Enable Model Runner `docker desktop enable model-runner --tcp 12434`.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Set the base-url to `&lt;a href=&quot;http://localhost:12434/engines%5C%60&quot;&gt;http://localhost:12434/engines\`&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Option 2:&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Enable Model Runner `docker desktop enable model-runner`.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Use &lt;a href=&quot;https://testcontainers.com/&quot;&gt;Testcontainers&lt;/a&gt; and set the base-url as follows:&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;&lt;code class=&quot;language-java&quot;&gt;@Container
+private static final SocatContainer socat = new SocatContainer().withTarget(80, &quot;model-runner.docker.internal&quot;);
+
+@Bean
+public OpenAiApi chatCompletionApi() {
+	var baseUrl = &quot;http://%s:%d/engines&quot;.formatted(socat.getHost(), socat.getMappedPort(80));
+	return OpenAiApi.builder().baseUrl(baseUrl).apiKey(&quot;test&quot;).build();
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Next, pull the model `docker model pull ai/gemma3` and confirm it is available locally `docker model list`&lt;/p&gt;
+&lt;h2 id=&quot;dependencies&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#dependencies&quot; aria-label=&quot;dependencies permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Dependencies&lt;/h2&gt;
+&lt;p&gt;Go to start.spring.io, select Spring Web, OpenAI and Testcontainers and generate the project.&lt;/p&gt;
+&lt;p&gt;The following dependencies must be listed&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;&amp;#x3C;dependency&gt;
+	&amp;#x3C;groupId&gt;org.springframework.boot&amp;#x3C;/groupId&gt;
+	&amp;#x3C;artifactId&gt;spring-boot-starter-web&amp;#x3C;/artifactId&gt;
+&amp;#x3C;/dependency&gt;
+&amp;#x3C;dependency&gt;
+	&amp;#x3C;groupId&gt;org.springframework.ai&amp;#x3C;/groupId&gt;
+	&amp;#x3C;artifactId&gt;spring-ai-openai-spring-boot-starter&amp;#x3C;/artifactId&gt;
+&amp;#x3C;/dependency&gt;
+
+&amp;#x3C;dependency&gt;
+	&amp;#x3C;groupId&gt;org.springframework.ai&amp;#x3C;/groupId&gt;
+	&amp;#x3C;artifactId&gt;spring-ai-spring-boot-testcontainers&amp;#x3C;/artifactId&gt;
+	&amp;#x3C;scope&gt;test&amp;#x3C;/scope&gt;
+&amp;#x3C;/dependency&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Also, make sure the Spring AI BOM is present&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;&amp;#x3C;dependencyManagement&gt;
+	&amp;#x3C;dependencies&gt;
+		&amp;#x3C;dependency&gt;
+			&amp;#x3C;groupId&gt;org.springframework.ai&amp;#x3C;/groupId&gt;
+			&amp;#x3C;artifactId&gt;spring-ai-bom&amp;#x3C;/artifactId&gt;
+			&amp;#x3C;version&gt;${spring-ai.version}&amp;#x3C;/version&gt;
+			&amp;#x3C;type&gt;pom&amp;#x3C;/type&gt;
+			&amp;#x3C;scope&gt;import&amp;#x3C;/scope&gt;
+		&amp;#x3C;/dependency&gt;
+	&amp;#x3C;/dependencies&gt;
+&amp;#x3C;/dependencyManagement&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Configuring Spring AI&lt;/p&gt;
+&lt;p&gt;To use Docker Model Runner, we need to configure the OpenAI client to point to the right endpoint and use the model pulled earlier&lt;/p&gt;
+&lt;p&gt;For Option 1: Let’s configure the src/main/resources/application.properties&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;spring.ai.openai.api-key=ignored
+spring.ai.openai.base-url=http://localhost:12434/engines
+spring.ai.openai.chat.options.model=ai/gemma3
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;For Option 2 (Using Testcontainers): Let’s go to `TestcontainersConfiguration`, define the SocatContainer bean and register the properties with `DynamicPropertyRegistrar` bean.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-java&quot;&gt;@TestConfiguration(proxyBeanMethods = false)
+class TestcontainersConfiguration {
+
+    @Bean
+    SocatContainer socat() {
+        return new SocatContainer(DockerImageName.parse(&quot;alpine/socat:1.8.0.1&quot;))
+                .withTarget(80, &quot;model-runner.docker.internal&quot;);
+    }
+    
+    @Bean
+    DynamicPropertyRegistrar properties(SocatContainer socat) {
+        return (registrar) -&gt; {
+            registrar.add(&quot;spring.ai.openai.base-url&quot;, () -&gt; &quot;http://%s:%d/engines&quot;.formatted(socat.getHost(), socat.getMappedPort(80)));
+            registrar.add(&quot;spring.ai.openai.api-key&quot;, () -&gt; &quot;test-api-key&quot;);
+            registrar.add(&quot;spring.ai.openai.chat.options.model&quot;, () -&gt; &quot;ai/gemma3&quot;);
+        };
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&quot;chat-example&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#chat-example&quot; aria-label=&quot;chat example permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Chat example&lt;/h2&gt;
+&lt;p&gt;Now, let’s create a simple controller&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-java&quot;&gt;@RestController
+public class ChatController {
+
+    private final ChatClient chatClient;
+
+    public ChatController(ChatClient.Builder chatClientBuilder) {
+        this.chatClient = chatClientBuilder.build();
+    }
+
+    @GetMapping(&quot;/chat&quot;)
+    public String chat(@RequestParam String message) {
+        return this.chatClient.prompt()
+                .user(message)
+                .call()
+                .content();
+    }
+
+   @GetMapping(&quot;/chat-stream&quot;)
+    public Flux&amp;#x3C;String&gt; chatStream(@RequestParam String message) {
+        return this.chatClient.prompt()
+                .user(message)
+                .stream()
+                .content();
+    }
+
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Run the application with `./mvnw spring-boot:test-run`&lt;/p&gt;
+&lt;p&gt;Using &lt;a href=&quot;https://httpie.io/&quot;&gt;httpie&lt;/a&gt;, let’s call to the `/chat` endpoint&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;http :8080/chat message==&quot;tell me a joke&quot;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;We can also call to the `/chat-stream` endpoint&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;http :8080/chat-stream message==&quot;tell me a haiku about docker containers&quot;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&quot;tool-example&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#tool-example&quot; aria-label=&quot;tool example permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Tool example&lt;/h2&gt;
+&lt;p&gt;Docker Model Runner of course supports tool calling if used with a model that supports tool calling.&lt;/p&gt;
+&lt;p&gt;Create a `FunctionCallConfig` class and add a simple function&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-java&quot;&gt;@Configuration(proxyBeanMethods = false)
+class FunctionCallConfig {
+
+    @Bean
+    @Description(&quot;Get the stock price&quot;)
+    public Function&amp;#x3C;MockStockService.StockRequest, MockStockService.StockResponse&gt; stockFunction() {
+        return new MockStockService();
+    }
+
+    static class MockStockService implements Function&amp;#x3C;MockStockService.StockRequest, MockStockService.StockResponse&gt; {
+
+        public record StockRequest(String symbol) {}
+        public record StockResponse(double price) {}
+
+        @Override
+        public StockResponse apply(StockRequest request) {
+            double price = request.symbol().contains(&quot;AAPL&quot;) ? 198 : 114;
+            return new StockResponse(price);
+        }
+    }
+    
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Now, let’s register `stockFunction` function&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-java&quot;&gt;@GetMapping(&quot;/stocks&quot;)
+public String stocks(@RequestParam String message) {
+    return this.chatClient.prompt()
+            .user(message)
+            .tools(&quot;stockFunction&quot;)
+            .call()
+            .content();
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Run the application `./mvnw spring-boot:test-run` and call the `/stocks` endpoint&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;http :8080/stocks message==&quot;What&apos;s AAPL and NVDA stock price?&quot;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The response should be something like `AAPL stock price is 198.0 and NVDA stock price is 114.0.` based on the hardcoded values we set.&lt;/p&gt;
+&lt;h2 id=&quot;references&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#references&quot; aria-label=&quot;references permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;References&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;h1 id=&quot;introducing-docker-model-runner-httpswwwdockercomblogintroducing-docker-model-runner&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#introducing-docker-model-runner-httpswwwdockercomblogintroducing-docker-model-runner&quot; aria-label=&quot;introducing docker model runner httpswwwdockercomblogintroducing docker model runner permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Introducing Docker Model Runner &lt;a href=&quot;https://www.docker.com/blog/introducing-docker-model-runner/&quot;&gt;https://www.docker.com/blog/introducing-docker-model-runner/&lt;/a&gt;&lt;/h1&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Run LLMs Locally with Docker: A Quickstart Guide to Model Runner &lt;a href=&quot;https://www.docker.com/blog/run-llms-locally/&quot;&gt;https://www.docker.com/blog/run-llms-locally/&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Docker Model Runner docs &lt;a href=&quot;https://docs.docker.com/desktop/features/model-runner/&quot;&gt;https://docs.docker.com/desktop/features/model-runner/&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Spring AI Docker Model Runner Example &lt;a href=&quot;https://github.com/eddumelendez/spring-ai-dmr&quot;&gt;https://github.com/eddumelendez/spring-ai-dmr&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&quot;conclusion&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#conclusion&quot; aria-label=&quot;conclusion permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Conclusion&lt;/h2&gt;
+&lt;p&gt;Docker Model Runner allows you to iterate faster, stay local and access an OpenAI-compatible API. It streamlines the development experience by enabling seamless integration with Spring AI’s OpenAI module, letting developers stay within their familiar inner-loop tooling. This empowers teams to build and test AI applications at their own pace—locally, securely, and efficiently. In the future, integration with Testcontainers will make it even easier to pull and run models on demand, further simplifying setup and testing workflows.Docker Model Runner allows you to iterate faster, stay local and access an OpenAI-compatible API. It streamlines the development experience by enabling seamless integration with Spring AI’s OpenAI module, letting developers stay within their familiar inner-loop tooling. This empowers teams to build and test AI applications at their own pace—locally, securely, and efficiently.&lt;/p&gt;</content:encoded></item></channel></rss>
