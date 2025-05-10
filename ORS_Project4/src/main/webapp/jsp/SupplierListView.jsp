@@ -91,7 +91,7 @@
  		String hlist = HTMLUtility.getList("category", String.valueOf(cbean.getCategory()), map);
  %> <%=hlist%> &nbsp;
 					<td align="left"><label align="left">Date:</label> <input
-						type="text" name="dob" placeholder="Enter DAte" id="udate"
+						type="text" name="dob" placeholder="Enter Date" id="udate"
 						Size="25" value="<%=ServletUtility.getParameter("dob", request)%>">
 
 
